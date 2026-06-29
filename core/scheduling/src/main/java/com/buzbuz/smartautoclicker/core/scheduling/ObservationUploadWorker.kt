@@ -24,8 +24,10 @@ import androidx.work.WorkerParameters
 
 import com.buzbuz.smartautoclicker.core.capture.sync.ObservationSyncRepository
 import com.buzbuz.smartautoclicker.core.network.TraxIntelApiService
+import com.buzbuz.smartautoclicker.core.network.auth.DeviceTokenDataSource
 import com.buzbuz.smartautoclicker.core.network.dto.ObservationBatchRequestDto
 import com.buzbuz.smartautoclicker.core.network.dto.ObservationUploadDto
+import com.buzbuz.smartautoclicker.core.observation.identity.DeviceIdentityDataSource
 import com.buzbuz.smartautoclicker.core.observation.sync.PendingUpload
 
 import dagger.assisted.Assisted
@@ -49,6 +51,8 @@ class ObservationUploadWorker @AssistedInject constructor(
     @Assisted params: WorkerParameters,
     private val syncRepository: ObservationSyncRepository,
     private val api: TraxIntelApiService,
+    private val tokenStore: DeviceTokenDataSource,
+    private val identity: DeviceIdentityDataSource,
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
@@ -74,8 +78,19 @@ class ObservationUploadWorker @AssistedInject constructor(
             }
             if (batch.all { it.id in acknowledged }) Result.success() else Result.retry()
         } catch (e: HttpException) {
+            // Always leave in-flight rows recoverable (PENDING/FAILED, never stuck UPLOADING).
             requeue(batch)
-            if (e.code() in 500..599 || e.code() == HTTP_TOO_MANY_REQUESTS) Result.retry() else Result.failure()
+            when {
+                e.code() == HTTP_UNAUTHORIZED -> {
+                    // Token revoked/expired: terminal. Clear credentials so the uploader no-ops
+                    // until re-enrollment. No token refresh (MVP: revocation => re-pair only).
+                    tokenStore.clear()
+                    identity.clearAccountBinding()
+                    Result.failure()
+                }
+                e.code() in 500..599 || e.code() == HTTP_TOO_MANY_REQUESTS -> Result.retry()
+                else -> Result.failure()
+            }
         } catch (_: IOException) {
             // Network / timeout (incl. ambiguous): safe to re-enqueue (idempotent ids).
             requeue(batch)
@@ -102,6 +117,7 @@ class ObservationUploadWorker @AssistedInject constructor(
         const val BATCH_SIZE = 100 // server max
         private const val STATUS_ACCEPTED = "accepted"
         private const val STATUS_DUPLICATE = "duplicate"
+        private const val HTTP_UNAUTHORIZED = 401
         private const val HTTP_TOO_MANY_REQUESTS = 429
     }
 }

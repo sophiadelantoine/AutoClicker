@@ -26,6 +26,8 @@ import androidx.work.testing.TestListenableWorkerBuilder
 
 import com.buzbuz.smartautoclicker.core.capture.sync.ObservationSyncRepository
 import com.buzbuz.smartautoclicker.core.network.TraxIntelApiService
+import com.buzbuz.smartautoclicker.core.network.auth.DeviceTokenDataSource
+import com.buzbuz.smartautoclicker.core.observation.identity.DeviceIdentityDataSource
 import com.buzbuz.smartautoclicker.core.network.dto.EnrollRequestDto
 import com.buzbuz.smartautoclicker.core.network.dto.EnrollResponseDto
 import com.buzbuz.smartautoclicker.core.network.dto.ObservationBatchRequestDto
@@ -74,12 +76,17 @@ class ObservationUploadWorkerTest {
     private fun pending(id: String, retry: Int = 0) =
         PendingUpload(id, "scn", "dev", 1_000L, "v", "TEXT", 90, isFulfilled = true, hasCrop = false, retryCount = retry)
 
-    private fun buildWorker(repo: ObservationSyncRepository, api: TraxIntelApiService): ObservationUploadWorker {
+    private fun buildWorker(
+        repo: ObservationSyncRepository,
+        api: TraxIntelApiService,
+        tokenStore: DeviceTokenDataSource = mockk(relaxed = true),
+        identity: DeviceIdentityDataSource = mockk(relaxed = true),
+    ): ObservationUploadWorker {
         val context = ApplicationProvider.getApplicationContext<Context>()
         return TestListenableWorkerBuilder<ObservationUploadWorker>(context)
             .setWorkerFactory(object : WorkerFactory() {
                 override fun createWorker(c: Context, name: String, params: WorkerParameters) =
-                    ObservationUploadWorker(c, params, repo, api)
+                    ObservationUploadWorker(c, params, repo, api, tokenStore, identity)
             })
             .build()
     }
@@ -143,6 +150,24 @@ class ObservationUploadWorkerTest {
         coEvery { repo.getUploadBatch(any()) } returns listOf(pending("a"))
         val api = FakeApiService().apply { responder = { throw httpException(429) } }
         assertTrue(buildWorker(repo, api).doWork() is ListenableWorker.Result.Retry)
+    }
+
+    @Test
+    fun revoked401IsTerminal_clearsCredentialsAndLeavesRowsRecoverable() = runTest {
+        val repo = mockk<ObservationSyncRepository>(relaxed = true)
+        coEvery { repo.getUploadBatch(any()) } returns listOf(pending("a"))
+        val tokenStore = mockk<DeviceTokenDataSource>(relaxed = true)
+        val identity = mockk<DeviceIdentityDataSource>(relaxed = true)
+        val api = FakeApiService().apply { responder = { throw httpException(401) } }
+
+        val result = buildWorker(repo, api, tokenStore, identity).doWork()
+
+        // terminal: failure, NOT retry (no backoff scheduled)
+        assertTrue(result is ListenableWorker.Result.Failure)
+        coVerify { tokenStore.clear() }
+        coVerify { identity.clearAccountBinding() }
+        // in-flight row left re-uploadable (not stuck UPLOADING)
+        coVerify { repo.markFailed("a", 0) }
     }
 
     @Test
