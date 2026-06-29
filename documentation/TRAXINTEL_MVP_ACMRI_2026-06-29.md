@@ -837,7 +837,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P2-2 (syncState transitions; getUploadBatch/markSyncState); Data contracts: SyncState enum + ObservationDao query specs; Addendum §1 line 3691 / SyncState section line 3201 (string state machine, supersedes the Int 0/1 model at lines 175/3052); core/smart/database/.../dao/ObservationDao.kt (P1-3); core:observation repository (P1-2)
 **Dependencies:** P1-3, P1-2
 
-#### [ ] P3-T05 — Wire HiltWorkerFactory + per-flavor Application for WorkManager (cloud-only)  `size: M`
+#### [x] P3-T05 — Wire HiltWorkerFactory + per-flavor Application for WorkManager (cloud-only)  `size: M`
 **Slice:** Add the WorkManager/Hilt-Work infrastructure using per-flavor Application classes so androidx.work stays out of the LOCAL build, with the CLOUD Application providing the HiltWorkerFactory and a no-op @HiltWorker that enqueues and resolves an injected dependency. Add a checkable runtime-classpath assertion that the LOCAL build links no androidx.work/Retrofit/OkHttp.
 **Definition of Done:**
 - [ ] A BaseSmartAutoClickerApplication lives in src/main (refactored from the existing smartautoclicker/src/main/java/com/buzbuz/smartautoclicker/application/SmartAutoClickerApplication.kt); a LocalApplication (src/local) carries no WorkManager; a CloudApplication (src/cloud) implements Configuration.Provider and supplies the HiltWorkerFactory.
