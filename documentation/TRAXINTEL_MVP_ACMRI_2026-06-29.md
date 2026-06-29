@@ -708,7 +708,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint Observation time-series chart spec (TRAXINTEL_MVP_BLUEPRINT.md line ~2307); Blueprint GET /v1/observations query endpoint (line ~2282); Blueprint acceptance 'distinguishes low-confidence points' (line ~90); Blueprint value_number as dashboard query source (lines ~3487-3489)
 **Dependencies:** P2-T01, P2-T06, P2-T08, P2-T09
 
-#### [ ] P2-T11 — Dashboard: latest-value-per-device table + crop viewer  `size: S`
+#### [x] P2-T11 — Dashboard: latest-value-per-device table + crop viewer  `size: S`
 **Slice:** Add the latest-value-per-device summary table (GET /v1/observations/latest) beside the chart and the crop viewer that opens an observation's cropped PNG via the presigned GET /v1/observations/{id}/crop URL.
 **Definition of Done:**
 - [ ] A latest-value-per-device summary table shows the most recent Observation (value + confidence + age) per device for the selected scenario, from GET /v1/observations/latest?scenarioId= (line ~2307).
