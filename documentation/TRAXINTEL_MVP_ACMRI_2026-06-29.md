@@ -663,7 +663,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint Observation batch upload cropUploadUrl semantics (TRAXINTEL_MVP_BLUEPRINT.md line ~3386); Blueprint crop PUT/confirm lifecycle (lines ~2227-2229); Blueprint rate-limit gap deferral (line ~3758)
 **Dependencies:** P2-T05
 
-#### [ ] P2-T08 — Scenario library CRUD + per-device assignment + device-facing pull  `size: M`
+#### [x] P2-T08 — Scenario library CRUD + per-device assignment + device-facing pull  `size: M`
 **Slice:** Implement tracking_scenarios CRUD (POST/PUT/GET /v1/scenarios, GET /v1/scenarios/{id}), the authoritative assignment write POST /v1/scenarios/{id}/assignments, and the device-facing GET /v1/devices/{deviceId}/scenarios that projects scenario_assignments.tracking into the flat scenarios array.
 **Definition of Done:**
 - [ ] An operator can create/read/update a TrackingScenario (name, readType, detectionArea Rect, alphabet, matchText, color, threshold, pollIntervalMs>=5000, cropCaptureEnabled) scoped to their Tenant via POST/PUT/GET /v1/scenarios + GET /v1/scenarios/{id}.
