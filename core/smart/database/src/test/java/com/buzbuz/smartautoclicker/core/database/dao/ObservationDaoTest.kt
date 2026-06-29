@@ -118,6 +118,19 @@ class ObservationDaoTest {
     }
 
     @Test
+    fun resetStuckUploadingToFailed_recoversStuckRows() = runTest {
+        dao.insert(observation("a", capturedAt = 100L))
+        dao.markStateForIds(listOf("a"), "UPLOADING")
+        assertEquals("UPLOADING is excluded from the upload queue", 0, dao.getUploadBatch(10).size)
+
+        val recovered = dao.resetStuckUploadingToFailed()
+
+        assertEquals(1, recovered)
+        // back to FAILED -> re-uploadable
+        assertEquals(listOf("a"), dao.getUploadBatch(10).map { it.id })
+    }
+
+    @Test
     fun observeSyncStateCounts_emitsPerStateCounts() = runTest {
         dao.insert(observation("a"))
         dao.insert(observation("b"))

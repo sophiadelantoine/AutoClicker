@@ -60,6 +60,13 @@ class ObservationSyncRepositoryTest {
     }
 
     @Test
+    fun recoverStuckUploads_delegatesToDao() = runTest {
+        coEvery { dao.resetStuckUploadingToFailed() } returns 3
+        assertEquals(3, repository.recoverStuckUploads())
+        coVerify { dao.resetStuckUploadingToFailed() }
+    }
+
+    @Test
     fun getUploadBatch_mapsEntities_hasCropFromCropPath() = runTest {
         coEvery { dao.getUploadBatch(10) } returns listOf(
             ObservationEntity("a", "dev", "scn", 100, "v", "TEXT", 90, true, "/crops/a.bin", "PENDING", 0),

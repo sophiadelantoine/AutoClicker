@@ -31,6 +31,9 @@ import kotlinx.coroutines.flow.Flow
  */
 class ObservationSyncRepository(private val dao: ObservationDao) {
 
+    /** Recover rows left UPLOADING by a killed worker (-> FAILED) so they re-upload. Call before a run. */
+    suspend fun recoverStuckUploads(): Int = dao.resetStuckUploadingToFailed()
+
     /** Oldest-first batch of not-yet-synced observations, projected for upload. */
     suspend fun getUploadBatch(limit: Int): List<PendingUpload> =
         dao.getUploadBatch(limit).map { it.toPendingUpload() }

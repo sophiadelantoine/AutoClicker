@@ -58,6 +58,13 @@ interface ObservationDao {
     @Query("UPDATE $OBSERVATION_TABLE SET sync_state = :syncState, retry_count = :retryCount WHERE id IN (:ids)")
     suspend fun markSyncState(ids: List<String>, syncState: String, retryCount: Int): Int
 
+    /**
+     * Crash recovery: reset rows left UPLOADING (worker killed mid-flight) back to FAILED so they are
+     * re-uploadable. Safe because the uploader runs serially. Returns the number of rows recovered.
+     */
+    @Query("UPDATE $OBSERVATION_TABLE SET sync_state = 'FAILED' WHERE sync_state = 'UPLOADING'")
+    suspend fun resetStuckUploadingToFailed(): Int
+
     /** Observable per-state counts for UI / sync-heartbeat consumers. */
     @Query("SELECT sync_state AS state, COUNT(*) AS count FROM $OBSERVATION_TABLE GROUP BY sync_state")
     fun observeSyncStateCounts(): Flow<List<SyncStateCount>>

@@ -26,6 +26,7 @@ import androidx.work.testing.TestListenableWorkerBuilder
 
 import com.buzbuz.smartautoclicker.core.capture.sync.ObservationSyncRepository
 import com.buzbuz.smartautoclicker.core.network.TraxIntelApiService
+import com.buzbuz.smartautoclicker.core.network.auth.DeviceToken
 import com.buzbuz.smartautoclicker.core.network.auth.DeviceTokenDataSource
 import com.buzbuz.smartautoclicker.core.network.settings.CloudSyncSettingsDataSource
 import com.buzbuz.smartautoclicker.core.observation.identity.DeviceIdentityDataSource
@@ -38,6 +39,7 @@ import com.buzbuz.smartautoclicker.core.observation.sync.PendingUpload
 
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 
 import kotlinx.coroutines.test.runTest
@@ -167,6 +169,10 @@ class ObservationUploadWorkerTest {
         val repo = mockk<ObservationSyncRepository>(relaxed = true)
         coEvery { repo.getUploadBatch(any()) } returns listOf(pending("a"))
         val tokenStore = mockk<DeviceTokenDataSource>(relaxed = true)
+        // a token IS present (hydrated + snapshot) -> a 401 means genuine revocation
+        val token = DeviceToken("jwt", "t", "d", "2027-01-01T00:00:00Z")
+        coEvery { tokenStore.current() } returns token
+        every { tokenStore.cachedToken() } returns token
         val identity = enrolledIdentity()
         val api = FakeApiService().apply { responder = { throw httpException(401) } }
 
@@ -178,6 +184,32 @@ class ObservationUploadWorkerTest {
         coVerify { identity.clearAccountBinding() }
         // in-flight row left re-uploadable (not stuck UPLOADING)
         coVerify { repo.markFailed("a", 0) }
+    }
+
+    @Test
+    fun unauthenticated401WithNoTokenAttached_retriesWithoutClearingCredentials() = runTest {
+        // cold-process cache miss: no token was sent, so a 401 is transient, not a revocation
+        val repo = mockk<ObservationSyncRepository>(relaxed = true)
+        coEvery { repo.getUploadBatch(any()) } returns listOf(pending("a"))
+        val tokenStore = mockk<DeviceTokenDataSource>(relaxed = true)
+        coEvery { tokenStore.current() } returns null
+        every { tokenStore.cachedToken() } returns null // no token was attached
+        val api = FakeApiService().apply { responder = { throw httpException(401) } }
+
+        val result = buildWorker(repo, api, tokenStore).doWork()
+
+        assertTrue(result is ListenableWorker.Result.Retry)
+        coVerify(exactly = 0) { tokenStore.clear() }
+    }
+
+    @Test
+    fun recoversStuckUploadingRowsBeforeFetchingBatch() = runTest {
+        val repo = mockk<ObservationSyncRepository>(relaxed = true)
+        coEvery { repo.getUploadBatch(any()) } returns emptyList()
+
+        buildWorker(repo, FakeApiService()).doWork()
+
+        coVerify { repo.recoverStuckUploads() }
     }
 
     @Test

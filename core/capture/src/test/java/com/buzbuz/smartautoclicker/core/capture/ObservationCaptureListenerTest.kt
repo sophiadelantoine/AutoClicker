@@ -63,6 +63,7 @@ class ObservationCaptureListenerTest {
         override suspend fun markSyncState(id: String, syncState: String, retryCount: Int): Int = 0
         override suspend fun markStateForIds(ids: List<String>, syncState: String): Int = 0
         override suspend fun markSyncState(ids: List<String>, syncState: String, retryCount: Int): Int = 0
+        override suspend fun resetStuckUploadingToFailed(): Int = 0
         override fun observeSyncStateCounts():
             kotlinx.coroutines.flow.Flow<List<com.buzbuz.smartautoclicker.core.database.dao.SyncStateCount>> =
             kotlinx.coroutines.flow.flowOf(emptyList())

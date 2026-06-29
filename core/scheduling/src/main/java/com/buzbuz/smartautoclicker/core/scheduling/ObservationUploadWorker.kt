@@ -61,6 +61,12 @@ class ObservationUploadWorker @AssistedInject constructor(
         // Gate: do nothing (no network, no SyncState transition) unless enrolled AND sync is enabled.
         if (!identity.isAccountBound() || !cloudSyncSettings.isEnabled()) return Result.success()
 
+        // Recover rows a previous run left UPLOADING (killed mid-flight) so they are not lost forever.
+        syncRepository.recoverStuckUploads()
+        // Hydrate the token snapshot from DataStore (the bearer interceptor reads it synchronously);
+        // in a cold WorkManager process the in-memory cache would otherwise be empty.
+        tokenStore.current()
+
         val batch = syncRepository.getUploadBatch(BATCH_SIZE)
         if (batch.isEmpty()) return Result.success()
 
@@ -86,13 +92,16 @@ class ObservationUploadWorker @AssistedInject constructor(
             // Always leave in-flight rows recoverable (PENDING/FAILED, never stuck UPLOADING).
             requeue(batch)
             when {
-                e.code() == HTTP_UNAUTHORIZED -> {
-                    // Token revoked/expired: terminal. Clear credentials so the uploader no-ops
-                    // until re-enrollment. No token refresh (MVP: revocation => re-pair only).
-                    tokenStore.clear()
+                e.code() == HTTP_UNAUTHORIZED && tokenStore.cachedToken() != null -> {
+                    // A token WAS sent yet rejected -> genuine revocation/expiry: terminal. Clear the
+                    // binding FIRST (fail closed: the gate then blocks even if token-clear is interrupted),
+                    // then the token. No refresh (MVP: revocation => re-pair only).
                     identity.clearAccountBinding()
+                    tokenStore.clear()
                     Result.failure()
                 }
+                // 401 with no token attached (e.g. a transient cold-start cache miss) is NOT a revocation.
+                e.code() == HTTP_UNAUTHORIZED -> Result.retry()
                 e.code() in 500..599 || e.code() == HTTP_TOO_MANY_REQUESTS -> Result.retry()
                 else -> Result.failure()
             }
