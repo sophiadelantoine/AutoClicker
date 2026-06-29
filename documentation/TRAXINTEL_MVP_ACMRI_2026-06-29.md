@@ -821,7 +821,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P3-1 (device enrollment via pairing code); Data contracts: POST /v1/devices:enroll line 3356; request body line 3359; 410 Gone pairing_code_expired; server-reconciled deviceId; Addendum: terminal vs retryable errors (410 expired => re-pair); core:observation DeviceIdentityDataSource (P0-6); core/common/settings (KEY_ACCOUNT_BOUND)
 **Dependencies:** P3-T02, P0-6
 
-#### [ ] P3-T04 — Add SyncState transition DAO queries + repository (getUploadBatch/markSyncState)  `size: M`
+#### [x] P3-T04 — Add SyncState transition DAO queries + repository (getUploadBatch/markSyncState)  `size: M`
 **Slice:** Expose the SyncState machine over the existing ObservationEntity: add/confirm DAO queries getUploadBatch(limit) and markSyncState(ids,state,retry) and a core:observation repository that drives PENDING->UPLOADING->{SYNCED|FAILED} and FAILED->UPLOADING, observable as a Flow.
 **Definition of Done:**
 - [ ] ObservationDao exposes getUploadBatch(limit) returning rows WHERE sync_state IN ('PENDING','FAILED') ORDER BY device_captured_at ASC LIMIT :limit, and markSyncState(ids, state, retry) updating sync_state + retryCount.
