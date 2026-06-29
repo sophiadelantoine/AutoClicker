@@ -805,7 +805,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P2-1 (token store; device-scoped bearer header); Blueprint §5 line 3722 (X-TraxIntel-Client: <appVersion>/<dbVersion>/<protocol=1>); core/common/settings/.../engine/data/SettingsDataSource.kt (DataStore pattern reference); core/smart/database/.../DatabaseInfo.kt (DATABASE_VERSION); smartautoclicker/build.gradle.kts (versionName); core/network/ (P0-4)
 **Dependencies:** P3-T01
 
-#### [ ] P3-T03 — Implement device enrollment via pairing code with server-id reconciliation  `size: M`
+#### [x] P3-T03 — Implement device enrollment via pairing code with server-id reconciliation  `size: M`
 **Slice:** Implement enrollment that POSTs a pairing code (plus device descriptor) to /v1/devices:enroll, persists the returned token/tenantId, reconciles the server deviceId with the client deviceId from P0-6, sets KEY_ACCOUNT_BOUND, and surfaces a clear terminal rejection on 410 pairing_code_expired.
 **Definition of Done:**
 - [ ] A repository/use-case in core:network calls POST /v1/devices:enroll with {pairingCode, model, osVersion, appVersion} and on success persists deviceToken/tenantId/tokenExpiresAt via the P3-T02 token store.
