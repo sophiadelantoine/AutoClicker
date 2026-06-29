@@ -790,7 +790,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P2-1 (core:network REST/auth client); Data contracts: Wire /v1 JSON (Trax Cloud) line 3356/3359; Architecture: GPLv3 boundary — core:network owns its own DTOs/serialization; gradle/libs.versions.toml; core/network/ (scaffolded in P0-4)
 **Dependencies:** P0-3, P0-4
 
-#### [ ] P3-T02 — Add device token store with bearer + X-TraxIntel-Client OkHttp interceptors  `size: M`
+#### [x] P3-T02 — Add device token store with bearer + X-TraxIntel-Client OkHttp interceptors  `size: M`
 **Slice:** Add a DataStore-backed device token store (token, tenantId, deviceId, expiry) in core:network and OkHttp interceptors that attach the device-scoped bearer header and the X-TraxIntel-Client header to every /v1 request.
 **Definition of Done:**
 - [ ] A token store persists deviceToken + tenantId + tokenExpiresAt in a DataStore prefs file (mirroring the pattern in core/common/settings/src/main/java/com/buzbuz/smartautoclicker/core/settings/engine/data/SettingsDataSource.kt), exposing read/write + a Flow; values survive process death.
