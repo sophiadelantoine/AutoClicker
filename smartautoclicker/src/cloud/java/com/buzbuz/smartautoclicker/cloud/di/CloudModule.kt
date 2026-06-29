@@ -27,8 +27,13 @@ import com.buzbuz.smartautoclicker.core.database.dao.ObservationDao
 import com.buzbuz.smartautoclicker.core.network.TraxIntelApiFactory
 import com.buzbuz.smartautoclicker.core.network.TraxIntelApiService
 import com.buzbuz.smartautoclicker.core.network.auth.DeviceTokenDataSource
+import com.buzbuz.smartautoclicker.core.network.command.TrackingController
 import com.buzbuz.smartautoclicker.core.network.settings.CloudSyncSettingsDataSource
 import com.buzbuz.smartautoclicker.core.observation.identity.DeviceIdentityDataSource
+import com.buzbuz.smartautoclicker.core.processing.domain.SmartProcessingRepository
+import com.buzbuz.smartautoclicker.core.scheduling.command.AndroidTrackingController
+import com.buzbuz.smartautoclicker.core.scheduling.command.LocalTrackingGateway
+import com.buzbuz.smartautoclicker.cloud.command.AndroidLocalTrackingGateway
 
 import dagger.Module
 import dagger.Provides
@@ -77,6 +82,18 @@ object CloudModule {
     @Singleton
     fun provideObservationSyncRepository(observationDao: ObservationDao): ObservationSyncRepository =
         ObservationSyncRepository(observationDao)
+
+    @Provides
+    @Singleton
+    fun provideLocalTrackingGateway(
+        @ApplicationContext context: Context,
+        processingRepository: SmartProcessingRepository,
+    ): LocalTrackingGateway = AndroidLocalTrackingGateway(context, processingRepository)
+
+    @Provides
+    @Singleton
+    fun provideTrackingController(gateway: LocalTrackingGateway): TrackingController =
+        AndroidTrackingController(gateway)
 
     @Provides
     @Singleton
