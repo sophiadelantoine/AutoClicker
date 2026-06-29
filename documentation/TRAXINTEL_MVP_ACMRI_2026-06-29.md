@@ -443,7 +443,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P1-3 (ObservationEntity + DAO + migration); Critical override (String PK, no FK, no idempotencyKey col); Data contracts: ObservationEntity Room shape; ObservationDao signatures; SyncState enum; core/smart/database/src/main/java/com/buzbuz/smartautoclicker/core/database/DatabaseInfo.kt (DATABASE_VERSION const, @StringDef table consts); core/smart/database/src/main/java/com/buzbuz/smartautoclicker/core/database/ClickDatabase.kt (entities[] list); core/smart/database/src/main/java/com/buzbuz/smartautoclicker/core/database/ScenarioDatabase.kt (abstract fun xDao() accessors); new core/smart/database/src/main/java/.../entity/ObservationEntity.kt, .../dao/ObservationDao.kt
 **Dependencies:** P0-4, P0-6
 
-#### [ ] P1-T06 — Manual Migration21to22 (observation table only) + register in SmartDatabaseModule + commit 22.json  `size: S`
+#### [x] P1-T06 — Manual Migration21to22 (observation table only) + register in SmartDatabaseModule + commit 22.json  `size: S`
 **Slice:** Write a single manual Migration21to22 that creates only the observation_table (plus its indices), register it in SmartDatabaseModule.providesClickDatabase(...).addMigrations(...) in di/Hilt.kt (do NOT add an AutoMigration(21,22) to ClickDatabase), and commit the exported 22.json schema.
 **Definition of Done:**
 - [ ] A Migration21to22 object creates observation_table and its sync_state/scenario_id indices, touching no existing tables.
