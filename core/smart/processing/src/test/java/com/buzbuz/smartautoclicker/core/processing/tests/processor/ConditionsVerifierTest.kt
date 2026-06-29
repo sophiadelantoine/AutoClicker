@@ -42,6 +42,7 @@ import kotlinx.coroutines.test.runTest
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -86,7 +87,7 @@ class ConditionsVerifierTest {
 
     private fun captureResult(): ProcessedConditionResult.Screen {
         val captor = argumentCaptor<ProcessedConditionResult.Screen>()
-        verify(mockListener).onScreenConditionProcessingCompleted(captor.capture())
+        verify(mockListener).onScreenConditionProcessingCompleted(captor.capture(), any())
         return captor.firstValue
     }
 
@@ -149,5 +150,34 @@ class ConditionsVerifierTest {
         val result = captureResult()
         assertEquals("balance 42", result.recognizedText)
         assertNull(result.numberDetected)
+    }
+
+    @Test
+    fun `result hook carries the verification-start capture timestamp`() = runTest {
+        val area = Rect(0, 0, 10, 10)
+        val condition = ScreenCondition.Number(
+            id = Identifier(databaseId = 3L),
+            eventId = Identifier(databaseId = 1L),
+            name = "num",
+            threshold = 80,
+            priority = 0,
+            detectionArea = area,
+            comparisonOperation = ComparisonOperation.GREATER,
+            counterValue = CounterOperationValue.Number(0.0),
+        )
+        whenever(mockScalingManager.getScreenConditionScalingInfo(condition))
+            .doReturn(ScreenConditionScalingInfo.Number(condition, area))
+        whenever(mockImageDetector.detectNumber(any(), any()))
+            .doReturn(DetectionResult(isDetected = true, confidenceRate = 90.0, position = Point(5, 5), size = Point(2, 2), numberDetected = 7.0))
+
+        val before = System.currentTimeMillis()
+        verifier.verifyConditions(AND, listOf(condition))
+        val after = System.currentTimeMillis()
+
+        val tsCaptor = argumentCaptor<Long>()
+        verify(mockListener).onScreenConditionProcessingCompleted(any(), tsCaptor.capture())
+        val ts = tsCaptor.firstValue
+        assertTrue("deviceCapturedAtMs must be non-zero", ts > 0L)
+        assertTrue("deviceCapturedAtMs must equal the verification-start time", ts in before..after)
     }
 }

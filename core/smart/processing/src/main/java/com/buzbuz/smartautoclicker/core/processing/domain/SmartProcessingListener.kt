@@ -81,8 +81,10 @@ interface SmartProcessingListener {
      * This will be called even if the condition is not fulfilled.
      *
      * @param result the result of the detection for the processed condition.
+     * @param deviceCapturedAtMs the System.currentTimeMillis() captured at the start of this
+     * verification pass; used as the capture time for any observation recorded from this result.
      */
-    fun onScreenConditionProcessingCompleted(result: ProcessedConditionResult.Screen) = Unit
+    fun onScreenConditionProcessingCompleted(result: ProcessedConditionResult.Screen, deviceCapturedAtMs: Long) = Unit
 
     /**
      * The value of a counter have changed.

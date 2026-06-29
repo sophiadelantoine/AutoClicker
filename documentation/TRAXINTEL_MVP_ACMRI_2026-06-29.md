@@ -415,7 +415,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P1-2a (widen processing seam); Capture seam edit (1); Addendum §2 (add numberDetected/recognizedText to Screen); core/smart/processing/src/main/java/com/buzbuz/smartautoclicker/core/processing/domain/model/ProcessedConditionResult.kt (sealed ProcessedConditionResult, data class Screen); core/smart/processing/src/main/java/com/buzbuz/smartautoclicker/core/processing/data/processor/ConditionsVerifier.kt (verifyColorCondition, verifyImageCondition, verifyNumberCondition (reads numberDetected), verifyTextCondition; onScreenConditionProcessingCompleted call sites)
 **Dependencies:** P1-T01b
 
-#### [ ] P1-T04 — Deliver capture timestamp through SmartProcessingListener  `size: M`
+#### [x] P1-T04 — Deliver capture timestamp through SmartProcessingListener  `size: M`
 **Slice:** Add a deviceCapturedAtMs:Long parameter to onScreenConditionProcessingCompleted sourced from ConditionsVerifier's private currentVerificationTsMs (set to System.currentTimeMillis() at verify start) so consumers receive the verification-start capture time.
 **Definition of Done:**
 - [ ] SmartProcessingListener.onScreenConditionProcessingCompleted carries a deviceCapturedAtMs:Long sourced from currentVerificationTsMs (set to System.currentTimeMillis() at verifyConditions start).

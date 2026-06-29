@@ -199,7 +199,7 @@ internal class DebugEngine @Inject constructor(
     }
 
     // Called anyway,even if not matched
-    override fun onScreenConditionProcessingCompleted(result: ProcessedConditionResult.Screen) {
+    override fun onScreenConditionProcessingCompleted(result: ProcessedConditionResult.Screen, deviceCapturedAtMs: Long) {
         coroutineScopeIo.launch {
             if (!shouldWriteReport) return@launch
 

@@ -146,7 +146,7 @@ internal class ConditionsVerifier(
             size = scalingManager.scaleUpDetectionResult(detectionResult.size),
         )
 
-        progressListener?.onScreenConditionProcessingCompleted(result)
+        progressListener?.onScreenConditionProcessingCompleted(result, currentVerificationTsMs ?: System.currentTimeMillis())
         return result
     }
 
@@ -182,7 +182,7 @@ internal class ConditionsVerifier(
             )
         } ?: condition.toInvalidConditionResult()
 
-        progressListener?.onScreenConditionProcessingCompleted(result)
+        progressListener?.onScreenConditionProcessingCompleted(result, currentVerificationTsMs ?: System.currentTimeMillis())
         return result
     }
 
@@ -226,7 +226,7 @@ internal class ConditionsVerifier(
                 )
             }
 
-        progressListener?.onScreenConditionProcessingCompleted(result)
+        progressListener?.onScreenConditionProcessingCompleted(result, currentVerificationTsMs ?: System.currentTimeMillis())
         return result
     }
 
@@ -254,7 +254,7 @@ internal class ConditionsVerifier(
             recognizedText = detectionResult.recognizedText,
         )
 
-        progressListener?.onScreenConditionProcessingCompleted(result)
+        progressListener?.onScreenConditionProcessingCompleted(result, currentVerificationTsMs ?: System.currentTimeMillis())
         return result
     }
 
