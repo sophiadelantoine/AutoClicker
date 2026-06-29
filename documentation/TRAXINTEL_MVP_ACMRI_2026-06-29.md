@@ -855,7 +855,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P1-5a (WorkManager + Hilt-Work infra; per-flavor Application); Addendum §10 (per-flavor Application keeps androidx.work out of GPLv3 LOCAL build); smartautoclicker/src/main/java/com/buzbuz/smartautoclicker/application/SmartAutoClickerApplication.kt; core:scheduling (P0-4)
 **Dependencies:** P0-3, P0-4
 
-#### [ ] P3-T06 — Add batched observation upload worker: happy-path + retryable backoff driving SyncState  `size: M`
+#### [x] P3-T06 — Add batched observation upload worker: happy-path + retryable backoff driving SyncState  `size: M`
 **Slice:** Implement the @HiltWorker uploader body that pulls a PENDING/FAILED batch (BATCH_SIZE=100), marks rows UPLOADING in-flight, POSTs to /v1/observations:batch, applies per-row accepted|duplicate->SYNCED, and uses WorkManager backoff (Result.retry) on retryable errors (5xx/IO/timeout/429 Retry-After). Terminal-401 handling is split out to P3-T07.
 **Definition of Done:**
 - [ ] The worker fetches a batch via getUploadBatch(100), marks rows UPLOADING in-flight, and POSTs them to /v1/observations:batch using the authenticated client (P3-T02).
