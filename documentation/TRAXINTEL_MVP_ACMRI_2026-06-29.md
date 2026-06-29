@@ -649,7 +649,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint observations DDL + value_number invariant (TRAXINTEL_MVP_BLUEPRINT.md lines ~3454-3489); Blueprint low-confidence-not-dropped capture rule (line ~1148)
 **Dependencies:** P2-T05
 
-#### [ ] P2-T07 — Batch-size cap + signed cropUploadUrl issuance on ingest  `size: S`
+#### [x] P2-T07 — Batch-size cap + signed cropUploadUrl issuance on ingest  `size: S`
 **Slice:** Enforce the BATCH_SIZE cap on /v1/observations:batch and issue a signed cropUploadUrl for rows with hasCrop=true (and none for hasCrop=false), completing the ingest endpoint's remaining concerns.
 **Definition of Done:**
 - [ ] Batches over the cap (BATCH_SIZE, default 100) are rejected/bounded with a clear error.
