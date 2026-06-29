@@ -773,7 +773,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 - DB schema change required beyond what P1-3 already shipped (e.g. a new column) — stop; coordinate a migration bump + committed schema JSON under core/smart/database/schemas rather than editing in place.
 - A required variant task does not resolve (e.g. a single-dimension name like assemblePlayStoreDebug is used) — stop; all P3 tasks must use two-dimension CONNECTIVITY x VERSION variant names.
 
-#### [ ] P3-T01 — Add Retrofit/OkHttp/kotlinx.serialization client + /v1 ApiService in core:network  `size: M`
+#### [x] P3-T01 — Add Retrofit/OkHttp/kotlinx.serialization client + /v1 ApiService in core:network  `size: M`
 **Slice:** In the cloud-only core:network module, configure an OkHttp/Retrofit client with a kotlinx.serialization converter and declare the typed /v1 Retrofit ApiService (devices:enroll, observations:batch) plus request/response DTOs owned by core:network (never the GPL domain entities).
 **Definition of Done:**
 - [ ] A Retrofit instance is built with an OkHttp client and kotlinx-serialization-converter (aliases from P0-3 / gradle/libs.versions.toml) and a configurable /v1 base URL.
