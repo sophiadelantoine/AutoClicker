@@ -604,7 +604,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint non-canonical 'POST /v1/auth/register' bootstrap (TRAXINTEL_MVP_BLUEPRINT.md lines ~2115-2127); Blueprint 'POST /v1/auth/login' (lines ~2275-2282); Blueprint 'Tenant-scoped auth' user story 9 (line ~57); Phase auth-authority resolution (entry criterion 2)
 **Dependencies:** P2-T01, P2-T02, P2-T02b
 
-#### [ ] P2-T04 — Enrollment-code mint + device registry + pairing-code enrollment  `size: M`
+#### [x] P2-T04 — Enrollment-code mint + device registry + pairing-code enrollment  `size: M`
 **Slice:** Implement POST /v1/devices/enrollment-codes (account-authed mint of a single-use short-lived code) and POST /v1/devices:enroll (a valid code mints a device row + device-scoped token), plus the registry reads GET /v1/devices and GET /v1/devices/{deviceId}.
 **Definition of Done:**
 - [ ] POST /v1/devices/enrollment-codes (account-authed) returns {code,expiresAt} bound to the caller's Tenant (line ~2153).
