@@ -871,7 +871,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P2-2 (offline queue + batched idempotent upload; BATCH_SIZE=100; WorkManager backoff); Data contracts: POST /v1/observations:batch; idempotency via (tenant_id,id); 429 Retry-After; Addendum: retryable (5xx/IO/timeout) error handling; core:scheduling worker (P3-T05); core:observation repository (P3-T04)
 **Dependencies:** P3-T04, P3-T05, P3-T01, P3-T02
 
-#### [ ] P3-T07 — Handle terminal 401-revoked: stop worker, clear token, require re-pair  `size: S`
+#### [x] P3-T07 — Handle terminal 401-revoked: stop worker, clear token, require re-pair  `size: S`
 **Slice:** Add the distinct terminal-error path to the uploader: on a 401 revoked response, stop the worker (no retry), clear the persisted device token, and clear KEY_ACCOUNT_BOUND so the device must re-pair before any further sync.
 **Definition of Done:**
 - [ ] A 401 revoked response from /v1/observations:batch (or any authenticated /v1 call surfaced through the worker) is treated as terminal: the worker stops without scheduling backoff (Result.failure/success-no-retry per WorkManager semantics, not Result.retry).
