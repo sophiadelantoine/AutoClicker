@@ -29,3 +29,38 @@ jobs:
         with:
           name: test-results
           path: ./**/testFDroidLocalDebugUnitTest/TEST-*.xml
+
+  # Builds the native (OpenCV/NCNN + JNI) layer once per ABI so a native regression in cpp/**
+  # fails CI. Only does work when native sources changed (paths filter); otherwise the build
+  # steps are skipped and the matrix legs pass trivially.
+  native-build:
+    name: Native build (${{ matrix.abi }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        abi: [ armeabi-v7a, arm64-v8a, x86, x86_64 ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Detect native (cpp) changes
+        uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            cpp:
+              - '**/cpp/**'
+              - '**/CMakeLists.txt'
+      - name: set up JDK 21
+        if: steps.changes.outputs.cpp == 'true'
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '21'
+      - name: Install NDK
+        if: steps.changes.outputs.cpp == 'true'
+        run: ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "ndk;28.2.13676358"
+      - name: Build native layer for ${{ matrix.abi }}
+        if: steps.changes.outputs.cpp == 'true'
+        run: ./gradlew :smartautoclicker:assembleFDroidLocalDebug -Pandroid.injected.build.abi=${{ matrix.abi }}
+        env:
+          JAVA_TOOL_OPTIONS: "-Djava.net.preferIPv4Stack=true"

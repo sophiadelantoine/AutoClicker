@@ -388,7 +388,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P1-1a (JNI regression guard + feature flag); core/smart/detection/src/main/java/com/buzbuz/smartautoclicker/core/detection/ImageDetector.kt; core/smart/detection/src/main/java/com/buzbuz/smartautoclicker/core/detection/NativeDetector.kt
 **Dependencies:** P1-T01b
 
-#### [ ] P1-T02b — CI: add per-ABI native build/test matrix step for cpp/** changes  `size: S`
+#### [x] P1-T02b — CI: add per-ABI native build/test matrix step for cpp/** changes  `size: S`
 **Slice:** Add a CI workflow step (matrix over the configured ABIs) to .github/workflows/execute-tests.yml that builds/tests the native layer on any cpp/** change and fails on a native regression. Validation is the workflow run itself (CI-validated), since gradle unit tasks do not exercise the workflow.
 **Definition of Done:**
 - [ ] A step is added to .github/workflows/execute-tests.yml that runs an NDK build (e.g. :smartautoclicker:assembleFDroidDebug or an explicit per-ABI externalNativeBuild task) across the ABI matrix and is triggered/relevant on cpp/** changes.
