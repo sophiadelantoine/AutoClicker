@@ -620,7 +620,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint Enrollment wire JSON (TRAXINTEL_MVP_BLUEPRINT.md lines ~3356-3364); Blueprint enrollment-code mint 'POST /v1/devices/enrollment-codes' (line ~2153); Blueprint registry reads GET /v1/devices (line ~2282); Blueprint devices DDL (lines ~3420-3429); Client consumer P3-1 enrollment UI (feature:cloud, AutoClicker repo)
 **Dependencies:** P2-T01, P2-T02, P2-T03
 
-#### [ ] P2-T05 — Token-scoped idempotent Observation batch ingest (ON CONFLICT + per-row status)  `size: M`
+#### [x] P2-T05 — Token-scoped idempotent Observation batch ingest (ON CONFLICT + per-row status)  `size: M`
 **Slice:** Implement the core of POST /v1/observations:batch (device token): derive tenant/device from the token (never the body), upsert each row ON CONFLICT (tenant_id,id) DO NOTHING, and return per-row {id,status:accepted|duplicate}.
 **Definition of Done:**
 - [ ] tenant_id and device_id are taken from the device token, never from the body; rows are stored tenant-scoped using the fixed scoping pattern.
