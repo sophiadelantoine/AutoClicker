@@ -575,7 +575,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint 'Cloud DB schema (Trax Cloud, DDL-ish)' (TRAXINTEL_MVP_BLUEPRINT.md lines ~3405-3493); Blueprint value_number/last_seen_at explanation (lines ~3487-3493); Blueprint primary store PostgreSQL 16 + Timescale (line ~1962)
 **Dependencies:** none
 
-#### [ ] P2-T02b — Add accounts.password_hash column migration (auth schema, elevated authority)  `size: S`
+#### [x] P2-T02b — Add accounts.password_hash column migration (auth schema, elevated authority)  `size: S`
 **Slice:** Add the accounts.password_hash column (argon2id, server-computed at registration) that canonical Section 11 omits, sourced from the elevated non-canonical auth section (line ~1994), as a follow-on migration so the auth task (P2-T03) has a grounded column to write into.
 **Definition of Done:**
 - [ ] A migration adds password_hash text NOT NULL to the accounts table created in P2-T02, matching the non-canonical auth DDL (line ~1994: 'argon2id, computed server-side at registration').
