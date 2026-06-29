@@ -588,7 +588,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint non-canonical auth DDL 'password_hash TEXT NOT NULL -- argon2id' (TRAXINTEL_MVP_BLUEPRINT.md line ~1994); Blueprint canonical accounts table that omits the column (line ~3408); Phase auth-authority resolution (entry criterion 2, stop condition 4)
 **Dependencies:** P2-T02
 
-#### [ ] P2-T03 — Account auth (argon2id) + tenant bootstrap via register/login  `size: M`
+#### [x] P2-T03 — Account auth (argon2id) + tenant bootstrap via register/login  `size: M`
 **Slice:** Implement POST /v1/auth/register (bootstrap one Tenant + owner Account in a single transaction, argon2id hash) and POST /v1/auth/login (verify against the stored hash, issue a tenant-scoped Account JWT), using the elevated non-canonical auth endpoints as authority.
 **Definition of Done:**
 - [ ] POST /v1/auth/register creates a Tenant then an owner Account in one transaction, stores password_hash as argon2id (plaintext never persisted), and returns a tenant-scoped Account JWT; duplicate email -> 409 (line ~2127).
