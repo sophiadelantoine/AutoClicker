@@ -185,7 +185,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P0-5 (launcher icons); smartautoclicker/src/main/res/mipmap-*/ic_smart_auto_clicker.png; smartautoclicker/src/main/res/mipmap-anydpi-v26/ic_smart_auto_clicker.xml; smartautoclicker/src/main/AndroidManifest.xml
 **Dependencies:** none
 
-#### [ ] P0-T04a — Add CONNECTIVITY dimension with LOCAL(default)/CLOUD to the variant model  `size: S`
+#### [x] P0-T04a — Add CONNECTIVITY dimension with LOCAL(default)/CLOUD to the variant model  `size: S`
 **Slice:** Add a CONNECTIVITY flavour dimension plus LOCAL(default)/CLOUD flavours to KlickrVariants.kt so the flavor matrix doubles, ordering LOCAL first so it is the default.
 **Definition of Done:**
 - [ ] build-logic/convention/src/main/kotlin/com/buzbuz/gradle/convention/model/KlickrVariants.kt: KlickrDimension gains a CONNECTIVITY entry and KlickrFlavour gains LOCAL and CLOUD entries with dimension = KlickrDimension.CONNECTIVITY

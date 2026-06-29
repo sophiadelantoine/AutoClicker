@@ -22,9 +22,10 @@ enum class KlickrBuildType(val buildTypeName: String) {
     RELEASE("release");
 }
 
-/** Gradle flavour dimension for Klick'r versions */
+/** Gradle flavour dimensions. VERSION stays first so it leads the variant name (e.g. fDroidLocalDebug). */
 enum class KlickrDimension(val flavourDimensionName: String) {
-    VERSION("version");
+    VERSION("version"),
+    CONNECTIVITY("connectivity");
 }
 
 /** Gradle flavours for Klick'r. */
@@ -32,5 +33,10 @@ enum class KlickrFlavour(val flavourName: String, val dimension: KlickrDimension
     /** Gradle flavour for FOSS fDroid Klick'r. */
     F_DROID("fDroid", KlickrDimension.VERSION),
     /** Gradle flavour for PlayStore Klick'r (with in app purchase, ads and crashlytics). */
-    PLAY_STORE("playStore", KlickrDimension.VERSION);
+    PLAY_STORE("playStore", KlickrDimension.VERSION),
+
+    /** Local-only build: no networking, GPLv3-clean. Declared first in its dimension so it is the default. */
+    LOCAL("local", KlickrDimension.CONNECTIVITY),
+    /** Cloud-connected build: networking + observation sync enabled. */
+    CLOUD("cloud", KlickrDimension.CONNECTIVITY);
 }
