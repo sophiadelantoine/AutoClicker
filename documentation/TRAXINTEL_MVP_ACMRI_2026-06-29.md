@@ -978,7 +978,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint §3783 UNRESOLVED command-contract conflict (core:network commands/pending+commands/{id}/ack vs data-contracts /v1/devices/{deviceId}/commands+commands:ack {ids:[...]}); §11 canonical /v1 contract; §12 data contracts; FCM-token stub §1615 'onNewToken { /* PATCH device fcm token */ }'; core/network/src/main/java/com/buzbuz/smartautoclicker/core/network/; OpenAPI /v1 spec consumed by core:network
 **Dependencies:** P2-1
 
-#### [ ] P4-T01 — Define TrackingController consent-aware command seam in core:network  `size: S`
+#### [x] P4-T01 — Define TrackingController consent-aware command seam in core:network  `size: S`
 **Slice:** Add a TrackingController interface (plus a CommandOutcome sealed result carrying ackReason APPLIED|PENDING_CONSENT|NOOP) in core:network so the command pull path depends only on the interface, not on core:scheduling or the local service.
 **Definition of Done:**
 - [ ] TrackingController exposes suspend requestStart(scenarioId: String): CommandOutcome and suspend stop(scenarioId: String?): CommandOutcome.
