@@ -17,7 +17,7 @@
 -->
 <resources>
 
-    <string name="app_name" translatable="false">Klick\'r</string>
+    <string name="app_name" translatable="false">TraxIntel</string>
 
     <string name="activity_scenario_title">Scenarios</string>
     <string name="accessibility_service_description">This application needs this service to inject the clicks you have
@@ -86,7 +86,7 @@
       -->
     <string name="message_delete_scenario">This will delete %1$s. Are you sure ?</string>
     <string name="message_error_screen_capture_permission_dialog_not_found">Your device does not provide the standard
-        Android screen capture permission dialog. Klick\'r won\'t be able to run on it.</string>
+        Android screen capture permission dialog. TraxIntel won\'t be able to run on it.</string>
 
     <!--
       - Toast messages.
@@ -140,7 +140,7 @@
     <!-- Legacy condition migration dialog  ======================================================================== -->
     <string name="dialog_condition_migration_title">Migration</string>
 
-    <string name="message_condition_migration_desc">Klick\'r images format have changed and your scenario needs to be updated.         This can take a few minutes depending on the number of conditions to migrate.</string>
+    <string name="message_condition_migration_desc">TraxIntel images format have changed and your scenario needs to be updated.         This can take a few minutes depending on the number of conditions to migrate.</string>
     <string name="message_condition_migration_count">%1$d Image Conditions to migrate.</string>
     <string name="message_condition_migration_success">All Image Conditions migrated.</string>
     <string name="message_condition_migration_error">Some conditions could not be migrated. Please check your scenarios.</string>

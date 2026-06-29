@@ -142,7 +142,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 - Adding CONNECTIVITY across the ~25 androidLib modules causes a representative library module to fail configuration/assembly (variant explosion, missing source set) -> stop and re-scope the flavour convention change before continuing
 - Version-catalog additions introduce a transitive version conflict that ./gradlew help / dependency resolution cannot satisfy -> stop and pin versions before scaffolding consumers
 
-#### [ ] P0-T01 — Rebrand app_name, manifest label, and hardcoded brand strings to TraxIntel  `size: S`
+#### [x] P0-T01 — Rebrand app_name, manifest label, and hardcoded brand strings to TraxIntel  `size: S`
 **Slice:** Rename the user-facing brand from Klick'r to TraxIntel in the default app_name string, the in-string brand mentions, and the manifest ${appName} label, without touching namespace or applicationId.
 **Definition of Done:**
 - [ ] smartautoclicker/src/main/res/values/strings.xml: app_name (line 20) reads TraxIntel; the two other Klick'r mentions (lines 89 and 143) are reworded to TraxIntel
