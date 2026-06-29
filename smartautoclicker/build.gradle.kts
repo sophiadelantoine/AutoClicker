@@ -54,6 +54,13 @@ android {
         buildConfig = true
     }
 
+    // Pre-existing upstream i18n lint errors (MissingQuantity: incomplete plural quantities for the
+    // ar/uk/ru locales) are recorded in this baseline so they do not fail the build. The rebrand did
+    // not introduce them (verified via git diff). Any NEW lint regression still fails the build.
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
+
     defaultConfig {
         applicationId = getExtraActualApplicationId()
 

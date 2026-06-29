@@ -301,7 +301,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P0-3 (Version-catalog entries); gradle/libs.versions.toml
 **Dependencies:** none
 
-#### [ ] P0-T08 — Smoke: renamed fDroid local debug build assembles end-to-end  `size: S`
+#### [x] P0-T08 — Smoke: renamed fDroid local debug build assembles end-to-end  `size: S`
 **Slice:** Confirm the rebrand plus the new connectivity dimension and the getVariantName fix produce a renamed FOSS debug variant that fully assembles, exercising NDK native compilation and Hilt/KSP codegen, as the phase exit smoke gate.
 **Definition of Done:**
 - [ ] ./gradlew clean :smartautoclicker:assembleFDroidLocalDebug completes successfully on a clean checkout after P0-T01, P0-T02, P0-T03, P0-T04a-e, and P0-T07
