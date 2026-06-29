@@ -887,7 +887,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Addendum §4 line 3716 / §7 line 3730 (terminal 401 revoked => stop workers, clear token, require re-pair); Blueprint P2-2 (terminal vs retryable error handling); core:network token store (P3-T02); core:scheduling worker (P3-T06); core/common/settings (KEY_ACCOUNT_BOUND)
 **Dependencies:** P3-T06, P3-T02
 
-#### [ ] P3-T08 — Gate sync on enrollment + cloud_sync_enabled toggle (no-op when off)  `size: S`
+#### [x] P3-T08 — Gate sync on enrollment + cloud_sync_enabled toggle (no-op when off)  `size: S`
 **Slice:** Make the uploader a no-op unless the device is enrolled (KEY_ACCOUNT_BOUND true) AND the cloud_sync_enabled setting is on; add the cloud_sync_enabled setting defaulting OFF and route the worker to short-circuit cleanly when either gate is false.
 **Definition of Done:**
 - [ ] A cloud_sync_enabled setting is added (in core:network or feature:cloud settings, following the SettingsDataSource pattern) defaulting OFF per Addendum §3 line 3706.
