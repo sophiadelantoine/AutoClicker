@@ -963,7 +963,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 - The dashboard PENDING_CONSENT / awaiting-setup state (P4-T07/T08) has no producing signal because the heartbeat (P4-T06) omits projectionLive/a11yEnabled — stop and reconcile producer/consumer before shipping the dashboard tasks.
 - Cloud backend command/heartbeat/assignment endpoints are unavailable or their /v1 contract diverges from the OpenAPI spec used by core:network, blocking the end-to-end fleet acceptance test (backend is a separate non-GPL repo; coordinate before integration).
 
-#### [ ] P4-T00 — Resolve command + FCM-token contract to a single canonical /v1 shape in the OpenAPI spec and core:network DTOs  `size: M`
+#### [x] P4-T00 — Resolve command + FCM-token contract to a single canonical /v1 shape in the OpenAPI spec and core:network DTOs  `size: M`
 **Slice:** Resolve the blueprint's flagged three-way conflict (core:network commands/pending + commands/{id}/ack-with-reason-body vs data-contracts /v1/devices/{deviceId}/commands + commands:ack with {ids:[...]}) by picking ONE canonical endpoint URL and ONE ack-body shape that can carry per-command outcome reasons, citing §11/§12; and decide the FCM-token update route (add to /v1 spec or fold into heartbeat). Output is the updated OpenAPI spec + matching core:network DTOs that every downstream P4 task consumes.
 **Definition of Done:**
 - [ ] A single canonical commands-pull endpoint URL and a single ack endpoint URL are chosen and documented in the OpenAPI spec, with §11/§12 cited as the deciding source.
