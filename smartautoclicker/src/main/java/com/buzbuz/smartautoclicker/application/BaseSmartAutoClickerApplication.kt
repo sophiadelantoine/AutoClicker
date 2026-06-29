@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 Kevin Buzeau
+ * Copyright (C) 2026 Kevin Buzeau
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,11 +20,15 @@ import android.app.Application
 import com.buzbuz.smartautoclicker.ComponentConfig
 import com.buzbuz.smartautoclicker.core.base.data.AppComponentsManager
 import com.google.android.material.color.DynamicColors
-import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
-@HiltAndroidApp
-class SmartAutoClickerApplication : Application() {
+/**
+ * Shared application logic. The concrete @HiltAndroidApp subclass is per CONNECTIVITY flavor:
+ * [com.buzbuz.smartautoclicker.application] LocalApplication (src/local, no WorkManager) and
+ * CloudApplication (src/cloud, supplies the HiltWorkerFactory) — so androidx.work never reaches
+ * the LOCAL build. Hilt injects the inherited @Inject fields into whichever subclass runs.
+ */
+abstract class BaseSmartAutoClickerApplication : Application() {
 
     @Inject lateinit var appComponentsManager: AppComponentsManager
 

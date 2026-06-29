@@ -187,4 +187,10 @@ dependencies {
     implementation(project(":feature:smart-debugging"))
     implementation(project(":feature:dumb-config"))
     implementation(project(":feature:tutorial"))
+
+    // Cloud connectivity: linked into the CLOUD flavor only (the LOCAL runtime classpath links
+    // none of androidx.work / Retrofit / OkHttp). CloudApplication supplies the HiltWorkerFactory.
+    cloudImplementation(project(":core:scheduling"))
+    cloudImplementation(libs.androidx.work.runtime.ktx)
+    cloudImplementation(libs.androidx.hilt.work)
 }
