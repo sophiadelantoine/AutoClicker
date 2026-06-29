@@ -530,9 +530,9 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 - Every P2 task passes the backend's real test/lint/build gate — the <RUNNER>/<BACKEND_REPO> tokens are resolved (per the deterministic entry precondition) and wired into CI by P2-T11, replacing the placeholder '[Cloud backend — placeholder]' catalog entries.
 
 **Validation gates:**
-- `Backend unit/integration test suite green: <BACKEND_REPO> <RUNNER:test> (resolves the placeholder '[Cloud backend — placeholder] Backend unit/integration tests' catalog entry to the stack runner chosen in the entry precondition, e.g. ./gradlew test).`
-- `Backend lint/type-check clean: <BACKEND_REPO> <RUNNER:check> (resolves '[Cloud backend — placeholder] Backend lint / type check', e.g. ./gradlew check).`
-- Backend build / container image succeeds: <BACKEND_REPO> <RUNNER:build> (resolves '[Cloud backend — placeholder] Backend build / container image', e.g. docker build -t traxintel-backend:dev .).
+- `Backend unit/integration test suite green (RESOLVED P2-T12): cd ../trax-cloud && ./gradlew test — wired in .github/workflows/ci.yml (Test suite step); fails if MigrationTest or ObservationIngestTest regress.`
+- `Backend lint/type-check clean (RESOLVED P2-T12): cd ../trax-cloud && ./gradlew check — wired in ci.yml (Lint / type-check step).`
+- Backend build / container image succeeds (RESOLVED P2-T12): cd ../trax-cloud && docker build -t traxintel-backend:dev . — wired in ci.yml (Build container image step); see ../trax-cloud/README.md "CI gates / resolved runner commands".
 - OpenAPI spec validates against an OpenAPI 3.x linter and round-trips with the server DTOs, including the confidence integer(0..100) <-> SQL smallint mapping (P2-T01/P2-T02 reconciliation).
 - Idempotent-ingest integration test (post same batch twice -> stored count unchanged, second response all 'duplicate') passes — contract gate from blueprint line ~2840.
 
@@ -722,7 +722,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint latest-value table + crop viewer (TRAXINTEL_MVP_BLUEPRINT.md lines ~2307-2308); Blueprint GET /v1/observations/latest and /crop read endpoints (line ~2282); Blueprint acceptance 'shows latest-per-device' (line ~90)
 **Dependencies:** P2-T01, P2-T08, P2-T10
 
-#### [ ] P2-T12 — Backend CI gate + container build wiring (concretize placeholder catalog entries)  `size: S`
+#### [x] P2-T12 — Backend CI gate + container build wiring (concretize placeholder catalog entries)  `size: S`
 **Slice:** Wire the backend repo's test, lint/type-check, OpenAPI validation, and container-image build into CI so the three '[Cloud backend — placeholder]' catalog entries are replaced with the resolved <RUNNER>/<BACKEND_REPO> commands and become runnable gates for every subsequent backend change.
 **Definition of Done:**
 - [ ] A CI workflow in the backend repo runs the test suite, the lint/type-check, and OpenAPI validation (P2-T01) on every push/PR using the runners resolved in the entry precondition.
