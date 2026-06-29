@@ -27,6 +27,7 @@ import androidx.work.testing.TestListenableWorkerBuilder
 import com.buzbuz.smartautoclicker.core.capture.sync.ObservationSyncRepository
 import com.buzbuz.smartautoclicker.core.network.TraxIntelApiService
 import com.buzbuz.smartautoclicker.core.network.auth.DeviceTokenDataSource
+import com.buzbuz.smartautoclicker.core.network.settings.CloudSyncSettingsDataSource
 import com.buzbuz.smartautoclicker.core.observation.identity.DeviceIdentityDataSource
 import com.buzbuz.smartautoclicker.core.network.dto.EnrollRequestDto
 import com.buzbuz.smartautoclicker.core.network.dto.EnrollResponseDto
@@ -76,17 +77,26 @@ class ObservationUploadWorkerTest {
     private fun pending(id: String, retry: Int = 0) =
         PendingUpload(id, "scn", "dev", 1_000L, "v", "TEXT", 90, isFulfilled = true, hasCrop = false, retryCount = retry)
 
+    /** An identity mock reporting the device as enrolled (account-bound). */
+    private fun enrolledIdentity() =
+        mockk<DeviceIdentityDataSource>(relaxed = true).also { coEvery { it.isAccountBound() } returns true }
+
+    /** A settings mock reporting cloud sync enabled. */
+    private fun syncEnabledSettings() =
+        mockk<CloudSyncSettingsDataSource>(relaxed = true).also { coEvery { it.isEnabled() } returns true }
+
     private fun buildWorker(
         repo: ObservationSyncRepository,
         api: TraxIntelApiService,
         tokenStore: DeviceTokenDataSource = mockk(relaxed = true),
-        identity: DeviceIdentityDataSource = mockk(relaxed = true),
+        identity: DeviceIdentityDataSource = enrolledIdentity(),
+        cloudSync: CloudSyncSettingsDataSource = syncEnabledSettings(),
     ): ObservationUploadWorker {
         val context = ApplicationProvider.getApplicationContext<Context>()
         return TestListenableWorkerBuilder<ObservationUploadWorker>(context)
             .setWorkerFactory(object : WorkerFactory() {
                 override fun createWorker(c: Context, name: String, params: WorkerParameters) =
-                    ObservationUploadWorker(c, params, repo, api, tokenStore, identity)
+                    ObservationUploadWorker(c, params, repo, api, tokenStore, identity, cloudSync)
             })
             .build()
     }
@@ -157,7 +167,7 @@ class ObservationUploadWorkerTest {
         val repo = mockk<ObservationSyncRepository>(relaxed = true)
         coEvery { repo.getUploadBatch(any()) } returns listOf(pending("a"))
         val tokenStore = mockk<DeviceTokenDataSource>(relaxed = true)
-        val identity = mockk<DeviceIdentityDataSource>(relaxed = true)
+        val identity = enrolledIdentity()
         val api = FakeApiService().apply { responder = { throw httpException(401) } }
 
         val result = buildWorker(repo, api, tokenStore, identity).doWork()
@@ -168,6 +178,44 @@ class ObservationUploadWorkerTest {
         coVerify { identity.clearAccountBinding() }
         // in-flight row left re-uploadable (not stuck UPLOADING)
         coVerify { repo.markFailed("a", 0) }
+    }
+
+    @Test
+    fun notAccountBound_isNoOp_noNetworkNoWork() = runTest {
+        val repo = mockk<ObservationSyncRepository>(relaxed = true)
+        val api = FakeApiService()
+        val identity = mockk<DeviceIdentityDataSource>(relaxed = true)
+        coEvery { identity.isAccountBound() } returns false // not enrolled
+
+        val result = buildWorker(repo, api, identity = identity).doWork()
+
+        assertTrue(result is ListenableWorker.Result.Success)
+        assertTrue("no network call", api.postedIdSets.isEmpty())
+        coVerify(exactly = 0) { repo.getUploadBatch(any()) } // no SyncState work
+    }
+
+    @Test
+    fun accountBoundButSyncDisabled_isNoOp() = runTest {
+        val repo = mockk<ObservationSyncRepository>(relaxed = true)
+        val api = FakeApiService()
+        val settings = mockk<CloudSyncSettingsDataSource>(relaxed = true)
+        coEvery { settings.isEnabled() } returns false // sync toggle off
+
+        val result = buildWorker(repo, api, identity = enrolledIdentity(), cloudSync = settings).doWork()
+
+        assertTrue(result is ListenableWorker.Result.Success)
+        assertTrue(api.postedIdSets.isEmpty())
+        coVerify(exactly = 0) { repo.getUploadBatch(any()) }
+    }
+
+    @Test
+    fun bothGatesTrue_proceedsToFetchBatch() = runTest {
+        val repo = mockk<ObservationSyncRepository>(relaxed = true)
+        coEvery { repo.getUploadBatch(any()) } returns emptyList()
+
+        buildWorker(repo, FakeApiService()).doWork() // defaults: enrolled + sync enabled
+
+        coVerify { repo.getUploadBatch(any()) }
     }
 
     @Test

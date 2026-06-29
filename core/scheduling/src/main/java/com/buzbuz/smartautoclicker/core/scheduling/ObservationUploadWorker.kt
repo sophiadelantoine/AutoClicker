@@ -27,6 +27,7 @@ import com.buzbuz.smartautoclicker.core.network.TraxIntelApiService
 import com.buzbuz.smartautoclicker.core.network.auth.DeviceTokenDataSource
 import com.buzbuz.smartautoclicker.core.network.dto.ObservationBatchRequestDto
 import com.buzbuz.smartautoclicker.core.network.dto.ObservationUploadDto
+import com.buzbuz.smartautoclicker.core.network.settings.CloudSyncSettingsDataSource
 import com.buzbuz.smartautoclicker.core.observation.identity.DeviceIdentityDataSource
 import com.buzbuz.smartautoclicker.core.observation.sync.PendingUpload
 
@@ -53,9 +54,13 @@ class ObservationUploadWorker @AssistedInject constructor(
     private val api: TraxIntelApiService,
     private val tokenStore: DeviceTokenDataSource,
     private val identity: DeviceIdentityDataSource,
+    private val cloudSyncSettings: CloudSyncSettingsDataSource,
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
+        // Gate: do nothing (no network, no SyncState transition) unless enrolled AND sync is enabled.
+        if (!identity.isAccountBound() || !cloudSyncSettings.isEnabled()) return Result.success()
+
         val batch = syncRepository.getUploadBatch(BATCH_SIZE)
         if (batch.isEmpty()) return Result.success()
 
