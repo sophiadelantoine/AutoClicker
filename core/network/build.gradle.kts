@@ -29,8 +29,13 @@ android {
 // Cloud-only HTTP boundary to the (non-GPL) TraxIntel backend. Owns its own @Serializable wire DTOs;
 // it MUST NOT import GPL domain entities (Observation/Scenario/Condition) — the /v1 contract is the seam.
 dependencies {
+    implementation(project(":core:common:base")) // PreferencesDataStore only (no GPL domain entities)
+    implementation(libs.androidx.datastore)
+
     implementation(libs.square.retrofit)
     implementation(libs.square.okhttp)
     implementation(libs.square.retrofit.converter.kotlinxSerialization)
     implementation(libs.kotlinx.serialization.json)
+
+    testImplementation(libs.square.okhttp.mockwebserver)
 }
