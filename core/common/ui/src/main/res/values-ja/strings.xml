@@ -38,7 +38,7 @@
     <string name="content_desc_move_menu">フローティング メニューを移動します</string>
     <string name="content_desc_drag_and_drop">ドラッグして並べ替えます</string>
     <string name="content_desc_play_pause_scenario">シナリオの再生または一時停止</string>
-    <string name="content_desc_stop_clicker">Klick\'r を停止します</string>
+    <string name="content_desc_stop_clicker">TraxIntel を停止します</string>
     <string name="content_desc_confirm">確定</string>
     <string name="content_desc_go_back">前のダイアログに戻ります</string>
 </resources>

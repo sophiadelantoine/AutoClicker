@@ -81,7 +81,7 @@
       - Views handles any length here, so no limitations.
       -->
     <string name="message_delete_scenario">سيتم حذف %1$s. هل أنت متأكد؟</string>
-    <string name="message_error_screen_capture_permission_dialog_not_found">جهازك لا يوفر مربع حوار إذن التقاط الشاشة القياسي لنظام Android. لن يتمكن Klick\'r من العمل عليه.</string>
+    <string name="message_error_screen_capture_permission_dialog_not_found">جهازك لا يوفر مربع حوار إذن التقاط الشاشة القياسي لنظام Android. لن يتمكن TraxIntel من العمل عليه.</string>
 
     <!--
       - Section titles.
@@ -141,7 +141,7 @@
     <!-- Legacy condition migration dialog  ======================================================================== -->
     <string name="dialog_condition_migration_title">الترحيل</string>
 
-    <string name="message_condition_migration_desc">تغير تنسيق صور Klick\'r ويحتاج السيناريو الخاص بك إلى تحديث. قد يستغرق هذا بضع دقائق حسب عدد الشروط المراد ترحيلها.</string>
+    <string name="message_condition_migration_desc">تغير تنسيق صور TraxIntel ويحتاج السيناريو الخاص بك إلى تحديث. قد يستغرق هذا بضع دقائق حسب عدد الشروط المراد ترحيلها.</string>
     <string name="message_condition_migration_count">%1$d شروط صور للترحيل.</string>
     <string name="message_condition_migration_success">تم ترحيل جميع شروط الصور.</string>
     <string name="message_condition_migration_error">لم يتم ترحيل بعض الشروط. يرجى التحقق من السيناريوهات الخاصة بك.</string>

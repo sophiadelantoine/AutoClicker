@@ -267,7 +267,7 @@ internal class ActionExecutor(
         androidExecutor.postNotification(
             ActionNotificationRequest(
                 actionId = notification.id.databaseId,
-                title = notification.name ?: "Klick'r",
+                title = notification.name ?: "TraxIntel",
                 message = notification.messageText.replaceCounterReferences(counters),
                 eventId = event.id.databaseId,
                 groupName = event.name,

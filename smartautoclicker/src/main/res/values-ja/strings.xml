@@ -56,7 +56,7 @@
     <string name="message_empty_scenario_list">最初のシナリオを作成し、端末上の作業を自動化しましょう</string>
 
     <string name="message_delete_scenario">「%1$s」を削除します。よろしいですか。</string>
-    <string name="message_error_screen_capture_permission_dialog_not_found">お使いの端末は、標準の Android 画面キャプチャ権限ダイアログを提供していません。Klick\'r はこの端末では動作しません。</string>
+    <string name="message_error_screen_capture_permission_dialog_not_found">お使いの端末は、標準の Android 画面キャプチャ権限ダイアログを提供していません。TraxIntel はこの端末では動作しません。</string>
 
     <string name="toast_denied_screen_sharing_permission">画面共有の権限が拒否されました</string>
     <string name="toast_denied_foreground_permission">フォアグラウンド サービスの権限が拒否されました</string>
@@ -91,7 +91,7 @@
 
     <string name="dialog_condition_migration_title">移行</string>
 
-    <string name="message_condition_migration_desc">Klick\'r の画像形式が変更されたため、シナリオの更新が必要です。移行する条件の数により、数分かかる場合があります。</string>
+    <string name="message_condition_migration_desc">TraxIntel の画像形式が変更されたため、シナリオの更新が必要です。移行する条件の数により、数分かかる場合があります。</string>
     <string name="message_condition_migration_count">移行対象の画像条件：%1$d 件</string>
     <string name="message_condition_migration_success">すべての画像条件を移行しました。</string>
     <string name="message_condition_migration_error">一部の条件を移行できませんでした。シナリオをご確認ください。</string>

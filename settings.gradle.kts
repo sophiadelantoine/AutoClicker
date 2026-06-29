@@ -24,7 +24,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Klick'r"
+rootProject.name = "TraxIntel"
 
 includeBuild("build-logic")
 

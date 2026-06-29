@@ -56,7 +56,7 @@
     <string name="message_empty_scenario_list">請建立第一個情境，開始於手機上自動化工作</string>
 
     <string name="message_delete_scenario">將刪除「%1$s」。是否確認？</string>
-    <string name="message_error_screen_capture_permission_dialog_not_found">您的裝置未提供標準的 Android 螢幕擷取權限對話方塊，Klick\'r 無法於此裝置上執行。</string>
+    <string name="message_error_screen_capture_permission_dialog_not_found">您的裝置未提供標準的 Android 螢幕擷取權限對話方塊，TraxIntel 無法於此裝置上執行。</string>
 
     <string name="toast_denied_screen_sharing_permission">使用者已拒絕螢幕共用權限</string>
     <string name="toast_denied_foreground_permission">使用者已拒絕前景服務權限</string>
@@ -91,7 +91,7 @@
 
     <string name="dialog_condition_migration_title">移轉</string>
 
-    <string name="message_condition_migration_desc">Klick\'r 的影像格式已變更，您的情境須予更新。所需時間視待移轉條件數量而定，可能需數分鐘。</string>
+    <string name="message_condition_migration_desc">TraxIntel 的影像格式已變更，您的情境須予更新。所需時間視待移轉條件數量而定，可能需數分鐘。</string>
     <string name="message_condition_migration_count">待移轉影像條件：%1$d 項</string>
     <string name="message_condition_migration_success">全部影像條件已移轉完成。</string>
     <string name="message_condition_migration_error">部分條件未能移轉，請檢查您的情境。</string>

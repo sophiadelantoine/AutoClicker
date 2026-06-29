@@ -157,7 +157,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P0-5 (Brand rename, strings/assets only); smartautoclicker/src/main/res/values/strings.xml; smartautoclicker/src/main/AndroidManifest.xml; smartautoclicker/build.gradle.kts
 **Dependencies:** none
 
-#### [ ] P0-T02 — Rebrand translated app strings and rootProject display name  `size: S`
+#### [x] P0-T02 — Rebrand translated app strings and rootProject display name  `size: S`
 **Slice:** Propagate the TraxIntel rename into every translated strings.xml that mentions Klick'r and update the Gradle rootProject display name, leaving applicationId untouched.
 **Definition of Done:**
 - [ ] All locale strings.xml under smartautoclicker/src/main/res/values-*, core/common/ui/src/main/res/values-*, and core/common/permissions/src/main/res/values-* that contain a Klick'r mention are reworded to TraxIntel (confirmed set includes values-ar, -fr, -it, -es, -ru, -ja, -pt-rBR, -uk, -zh-rCN, -zh-rTW in each of the three module trees)

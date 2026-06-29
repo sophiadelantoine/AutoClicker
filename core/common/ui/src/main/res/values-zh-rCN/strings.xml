@@ -38,7 +38,7 @@
     <string name="content_desc_move_menu">移动悬浮菜单</string>
     <string name="content_desc_drag_and_drop">拖放以调整顺序</string>
     <string name="content_desc_play_pause_scenario">开始或暂停场景</string>
-    <string name="content_desc_stop_clicker">停止 Klick\'r</string>
+    <string name="content_desc_stop_clicker">停止 TraxIntel</string>
     <string name="content_desc_confirm">确认</string>
     <string name="content_desc_go_back">返回上一对话框</string>
 </resources>
