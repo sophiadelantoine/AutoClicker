@@ -16,13 +16,19 @@
  */
 package com.buzbuz.smartautoclicker.core.network
 
+import com.buzbuz.smartautoclicker.core.network.dto.CommandAckRequestDto
+import com.buzbuz.smartautoclicker.core.network.dto.CommandPullResponse
 import com.buzbuz.smartautoclicker.core.network.dto.EnrollRequestDto
 import com.buzbuz.smartautoclicker.core.network.dto.EnrollResponseDto
+import com.buzbuz.smartautoclicker.core.network.dto.FcmTokenUpdateDto
 import com.buzbuz.smartautoclicker.core.network.dto.ObservationBatchRequestDto
 import com.buzbuz.smartautoclicker.core.network.dto.ObservationBatchResponseDto
 
 import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 /** Typed /v1 surface. Routes use the canonical colon form (POST /v1/devices:enroll). */
 interface TraxIntelApiService {
@@ -32,4 +38,13 @@ interface TraxIntelApiService {
 
     @POST("v1/observations:batch")
     suspend fun uploadObservations(@Body request: ObservationBatchRequestDto): ObservationBatchResponseDto
+
+    @GET("v1/devices/{deviceId}/commands")
+    suspend fun pullCommands(@Path("deviceId") deviceId: String): CommandPullResponse
+
+    @POST("v1/devices/{deviceId}/commands:ack")
+    suspend fun ackCommands(@Path("deviceId") deviceId: String, @Body request: CommandAckRequestDto)
+
+    @PATCH("v1/devices/{deviceId}/fcm-token")
+    suspend fun updateFcmToken(@Path("deviceId") deviceId: String, @Body request: FcmTokenUpdateDto)
 }

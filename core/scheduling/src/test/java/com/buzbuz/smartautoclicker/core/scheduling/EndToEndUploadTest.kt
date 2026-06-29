@@ -82,6 +82,9 @@ class EndToEndUploadTest {
             if (uploadCalls == dropAckOnUploadNumber) throw IOException("ack lost after server stored")
             return ObservationBatchResponseDto(results)
         }
+        override suspend fun pullCommands(deviceId: String) = error("unused")
+        override suspend fun ackCommands(deviceId: String, request: com.buzbuz.smartautoclicker.core.network.dto.CommandAckRequestDto) {}
+        override suspend fun updateFcmToken(deviceId: String, request: com.buzbuz.smartautoclicker.core.network.dto.FcmTokenUpdateDto) {}
     }
 
     private lateinit var context: Context

@@ -74,6 +74,9 @@ class ObservationUploadWorkerTest {
             postedIdSets.add(request.observations.map { it.id }.toSet())
             return responder(request)
         }
+        override suspend fun pullCommands(deviceId: String) = error("unused")
+        override suspend fun ackCommands(deviceId: String, request: com.buzbuz.smartautoclicker.core.network.dto.CommandAckRequestDto) {}
+        override suspend fun updateFcmToken(deviceId: String, request: com.buzbuz.smartautoclicker.core.network.dto.FcmTokenUpdateDto) {}
     }
 
     private fun pending(id: String, retry: Int = 0) =
