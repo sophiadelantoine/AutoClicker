@@ -902,7 +902,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Addendum §3 line 3706 (cloud_sync_enabled default OFF; sync gated on account-bound AND enabled); Blueprint P3-1 (sync gating); core/common/settings (KEY_ACCOUNT_BOUND, settings pattern); core:scheduling worker (P3-T06)
 **Dependencies:** P3-T06, P3-T03
 
-#### [ ] P3-T09 — End-to-end device->cloud single-observation upload with forced-retry zero-duplicate assertion  `size: M`
+#### [x] P3-T09 — End-to-end device->cloud single-observation upload with forced-retry zero-duplicate assertion  `size: M`
 **Slice:** Wire enrollment + the gated uploader together so a freshly captured Observation flows device->cloud: enroll the device, capture one Observation via the P1-5b burst path, run the worker, confirm it lands SYNCED locally and is accepted exactly once server-side, and assert that a forced mid-flight retry produces zero net duplicates.
 **Definition of Done:**
 - [ ] After enrolling against /v1/devices:enroll (P3-T03) and enabling sync (P3-T08), capturing one Observation (via the P1-5b burst path) and enqueuing the uploader transitions that Observation to SYNCED and the server/stub records exactly one accepted row.
