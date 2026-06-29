@@ -1007,7 +1007,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint CONSENT & FOREGROUND-SERVICE BLOCKER for remote START; §184/§322-323 tracking driven by marking scenario active in in-service loop (setScenarioId), NOT a startDetection scenarioId param; core/scheduling/src/main/java/com/buzbuz/smartautoclicker/core/scheduling/; smartautoclicker/src/main/java/com/buzbuz/smartautoclicker/localservice/LocalServiceProvider.kt; core/smart/processing/src/main/java/com/buzbuz/smartautoclicker/core/processing/domain/SmartProcessingRepository.kt (setScenarioId line 61, startDetection line 89 takes no scenarioId)
 **Dependencies:** P4-T01, P1-5b, P3-2
 
-#### [ ] P4-T03 — Add CommandPullWorker pulling + acking remote commands through TrackingController  `size: M`
+#### [x] P4-T03 — Add CommandPullWorker pulling + acking remote commands through TrackingController  `size: M`
 **Slice:** Add an enrollment-gated @HiltWorker CommandPullWorker in core:network that calls the canonical commands-pull endpoint (P4-T00), discards commands past expiresAt (acking EXPIRED via the canonical ack body), applies START/STOP via TrackingController, and acks every command with its outcome reason using the canonical ack endpoint/body.
 **Definition of Done:**
 - [ ] doWork() returns success early when DeviceCredentialsDataSource.isEnrolledFlow is false (no pull, zero API calls on unenrolled devices).
