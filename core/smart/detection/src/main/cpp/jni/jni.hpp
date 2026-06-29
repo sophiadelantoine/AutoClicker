@@ -40,6 +40,14 @@ void releaseBitmapLock(JNIEnv *env, jobject bitmap);
 
 jdoubleArray toJniResult(JNIEnv *env, DetectionResult* result);
 
+/**
+ * Text-detection variant of toJniResult. Returns an Object[2] bundling the legacy 7-element
+ * numeric jdoubleArray (index 0, identical layout to toJniResult) and the recognized text as a
+ * raw UTF-8 jbyteArray (index 1). The bytes are the raw std::string contents (NOT NewStringUTF,
+ * which emits modified UTF-8 and would corrupt CJK/Arabic); the Kotlin side decodes them as UTF-8.
+ */
+jobject toJniTextResult(JNIEnv *env, DetectionResult* result);
+
 void throwRuntimeException(JNIEnv *env, const char *message);
 
 #endif //KLICK_R_JNI_HPP

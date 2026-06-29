@@ -67,7 +67,7 @@ TextMatchingResult* TextMatcher::matchText(
 
         if (score < currentMatchingResult.getResultConfidence()) continue;
 
-        currentMatchingResult.updateResults(detectionArea, recognizerResult.boundingBox, score);
+        currentMatchingResult.updateResults(detectionArea, recognizerResult.boundingBox, score, recognizerResult.text);
         if ((int) score >= threshold) {
             currentMatchingResult.markResultAsDetected();
             break;
@@ -112,6 +112,7 @@ TextMatchingResult* TextMatcher::matchNumber(
                 detectionArea,
                 recognizerResult.boundingBox,
                 score,
+                recognizerResult.text,
                 stringToDouble(recognizerResult.text));
 
         if ((int) score >= threshold) {

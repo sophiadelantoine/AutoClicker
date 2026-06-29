@@ -155,7 +155,7 @@ extern "C" {
         }
     }
 
-    JNIEXPORT jdoubleArray JNICALL Java_com_buzbuz_smartautoclicker_core_detection_NativeDetector_detectTextNative(
+    JNIEXPORT jobject JNICALL Java_com_buzbuz_smartautoclicker_core_detection_NativeDetector_detectTextNative(
             JNIEnv *env,
             jobject self,
             jstring conditionText,
@@ -173,9 +173,9 @@ extern "C" {
         const char* nativeRecognitionModelId = env->GetStringUTFChars(recognitionModelId, nullptr);
         if (nativeConditionText == nullptr || nativeRecognitionModelId == nullptr) return nullptr;
 
-        jdoubleArray result = nullptr;
+        jobject result = nullptr;
         try {
-            result = toJniResult(env, detector->detectText(
+            result = toJniTextResult(env, detector->detectText(
                     nativeConditionText,
                     nativeRecognitionModelId,
                     cv::Rect(x, y, width, height),

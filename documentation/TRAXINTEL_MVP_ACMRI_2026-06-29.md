@@ -348,7 +348,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 - Adding an AutoMigration(21,22) in addition to the manual migration — contract resolves to a single manual observation-table-only migration; stop if both appear in ClickDatabase autoMigrations + the addMigrations chain.
 - An entity column appears on ObservationEntity that is not anchored to the Data-contracts ObservationEntity Room shape (e.g. tenantId) — stop and trace it to the contract or drop it before bumping the schema.
 
-#### [ ] P1-T01 — Native: return recognized OCR text from toJniResult/detectTextNative as a jobject (numeric array + UTF-8 jbyteArray)  `size: M`
+#### [x] P1-T01 — Native: return recognized OCR text from toJniResult/detectTextNative as a jobject (numeric array + UTF-8 jbyteArray)  `size: M`
 **Slice:** Change the native side only: edit toJniResult in jni_detection_result.cpp so the text path returns a jobject carrying the existing 7-element numeric array plus the recognized UTF-8 string as a jbyteArray (sourced from TextRecognizerResult.text), and update detectTextNative in smartautoclicker.cpp to call/return it. Number/Image/Color native paths keep returning the legacy 7-element jdoubleArray unchanged. No Kotlin-side decode/field change in this task.
 **Definition of Done:**
 - [ ] toJniResult in core/smart/detection/src/main/cpp/jni/jni_detection_result.cpp (currently builds a 7-element array via NewDoubleArray(7), ~L23-44) is extended/supplemented so the text path returns a jobject bundling the unchanged 7-element numeric array plus a UTF-8 jbyteArray of the recognized string (NOT NewStringUTF, so CJK/Arabic bytes are preserved); the recognized text is sourced from TextRecognizerResult.text in text_matcher.cpp.

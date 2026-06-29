@@ -43,3 +43,48 @@ jdoubleArray toJniResult(JNIEnv *env, DetectionResult* result) {
     env->SetDoubleArrayRegion(out, 0, 7, buffer);
     return out;
 }
+
+jobject toJniTextResult(JNIEnv *env, DetectionResult* result) {
+    if (result == nullptr) return nullptr;
+
+    // 1) Legacy 7-element numeric array (identical layout to toJniResult).
+    jdouble detectedNumber = std::numeric_limits<double>::lowest();
+    std::string recognizedText;
+    auto* textResult = dynamic_cast<TextMatchingResult*>(result);
+    if (textResult != nullptr) {
+        detectedNumber = textResult->getRecognizedNumber();
+        recognizedText = textResult->getRecognizedText();
+    }
+
+    jdoubleArray numericArray = env->NewDoubleArray(7);
+    jdouble buffer[7] = {
+            result->isDetected() ? 1.0 : 0.0,
+            (double) result->getResultAreaCenterX(),
+            (double) result->getResultAreaCenterY(),
+            (double) result->getResultAreaWidth(),
+            (double) result->getResultAreaHeight(),
+            result->getResultConfidence(),
+            detectedNumber
+    };
+    env->SetDoubleArrayRegion(numericArray, 0, 7, buffer);
+
+    // 2) Recognized text as raw UTF-8 bytes (preserve multibyte CJK/Arabic; decoded as UTF-8 in Kotlin).
+    auto textLength = (jsize) recognizedText.size();
+    jbyteArray textBytes = env->NewByteArray(textLength);
+    if (textLength > 0) {
+        env->SetByteArrayRegion(textBytes, 0, textLength,
+                                reinterpret_cast<const jbyte*>(recognizedText.data()));
+    }
+
+    // 3) Bundle [numericArray, textBytes] into an Object[2].
+    jclass objectClass = env->FindClass("java/lang/Object");
+    jobjectArray bundle = env->NewObjectArray(2, objectClass, nullptr);
+    env->SetObjectArrayElement(bundle, 0, numericArray);
+    env->SetObjectArrayElement(bundle, 1, textBytes);
+
+    env->DeleteLocalRef(numericArray);
+    env->DeleteLocalRef(textBytes);
+    env->DeleteLocalRef(objectClass);
+
+    return bundle;
+}

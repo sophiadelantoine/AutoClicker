@@ -26,6 +26,7 @@ void TextMatchingResult::updateResults(
         const cv::Rect& detectionArea,
         const cv::Rect& boundingBox,
         float confidence,
+        const std::string& textRecognized,
         double numberRecognized
 ) {
     area.x = detectionArea.x + boundingBox.x;
@@ -35,6 +36,7 @@ void TextMatchingResult::updateResults(
     centerX = area.x + ((int) (area.width / 2));
     centerY = area.y + ((int) (area.height / 2));
     recognizerConfidence = confidence;
+    recognizedText = textRecognized;
     recognizedNumber = numberRecognized;
 }
 
@@ -50,6 +52,7 @@ void TextMatchingResult::reset() {
     area.y = 0;
     area.width = 0;
     area.height = 0;
+    recognizedText.clear();
 }
 
 bool TextMatchingResult::isDetected() const {
@@ -82,5 +85,9 @@ int TextMatchingResult::getResultAreaHeight() const {
 
 double TextMatchingResult::getRecognizedNumber() const {
     return recognizedNumber;
+}
+
+const std::string& TextMatchingResult::getRecognizedText() const {
+    return recognizedText;
 }
 

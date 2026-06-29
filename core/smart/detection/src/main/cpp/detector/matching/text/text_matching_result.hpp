@@ -19,6 +19,7 @@
 #define KLICK_R_TEXT_MATCHING_RESULT_HPP
 
 #include <opencv2/core/types.hpp>
+#include <string>
 #include "../../detection_result.hpp"
 
 namespace smartautoclicker {
@@ -33,12 +34,14 @@ namespace smartautoclicker {
         cv::Rect area;
         float recognizerConfidence;
         double recognizedNumber = invalidNumber;
+        std::string recognizedText;
 
     public:
         void updateResults(
                 const cv::Rect& detectionArea,
                 const cv::Rect& boundingBox,
                 float confidence,
+                const std::string& textRecognized = "",
                 double numberRecognized = invalidNumber);
         void markResultAsDetected();
         void reset();
@@ -51,6 +54,7 @@ namespace smartautoclicker {
         [[nodiscard]] int getResultAreaWidth() const override;
         [[nodiscard]] int getResultAreaHeight() const override;
         [[nodiscard]] double getRecognizedNumber() const;
+        [[nodiscard]] const std::string& getRecognizedText() const;
     };
 } // smartautoclicker
 
