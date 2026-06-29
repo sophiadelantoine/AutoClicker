@@ -470,7 +470,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P1-3a (mapper) and P1-2 (domain model); Data contracts: Observation domain field list; id is UUID = wire id = dedup key; core/observation (module scaffolded in P0-4) — domain/Observation.kt, repo; core/smart/database/src/main/java/.../entity/ (ObservationMapper)
 **Dependencies:** P0-4, P1-T05, P1-T06
 
-#### [ ] P1-T08 — ObservationValueMapper: stringify and type the captured value  `size: S`
+#### [x] P1-T08 — ObservationValueMapper: stringify and type the captured value  `size: S`
 **Slice:** Add ObservationValueMapper in core:observation that maps a detection/processed result to (value,valueType,confidence): Number->NUMBER/Double.toString(); Text->TEXT/verbatim trim-only; State->STATE/'detected'|'not_detected' mirroring isFulfilled; confidence=Math.round(confidenceRate).toInt() clamped 0-100.
 **Definition of Done:**
 - [ ] Number maps to valueType='NUMBER', value=Double.toString() (locale-independent, no separators); a failed Number read maps to value=null, isFulfilled=false.
