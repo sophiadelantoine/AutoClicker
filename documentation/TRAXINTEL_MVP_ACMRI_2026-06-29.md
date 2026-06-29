@@ -362,7 +362,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P1-1 (JNI surface recognized OCR text); Data contracts: Text verbatim/trim-only normalization; Addendum §2 UTF-8 decode; core/smart/detection/src/main/cpp/jni/jni_detection_result.cpp (toJniResult, NewDoubleArray(7), ~L23-44); core/smart/detection/src/main/cpp/smartautoclicker.cpp (detectTextNative); core/smart/detection/src/main/cpp/detector/matching/text/text_matcher.cpp (TextRecognizerResult.text)
 **Dependencies:** none
 
-#### [ ] P1-T01b — Kotlin: decode recognized text via UTF-8 and add DetectionResult.recognizedText  `size: M`
+#### [x] P1-T01b — Kotlin: decode recognized text via UTF-8 and add DetectionResult.recognizedText  `size: M`
 **Slice:** Add recognizedText:String?=null to DetectionResult, update the external detectTextNative signature in NativeDetector.kt to receive the jobject from P1-T01, decode the jbyteArray with Charsets.UTF_8, and populate recognizedText. The legacy DoubleArray.toDetectionResult() numeric path stays unchanged.
 **Definition of Done:**
 - [ ] DetectionResult gains a recognizedText:String? field defaulting to null; the existing DoubleArray?.toDetectionResult() numeric mapping is unchanged.

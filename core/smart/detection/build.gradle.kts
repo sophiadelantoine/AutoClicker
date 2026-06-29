@@ -164,4 +164,11 @@ android {
 dependencies {
     implementation(libs.androidx.annotation)
     implementation(project(":core:common:base"))
+
+    // Local unit tests for the pure-Kotlin result mappers (Robolectric provides android.graphics.Point).
+    // The module's instrumented tests stay on the androidLocalTest setup above.
+    testImplementation(libs.junit)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.test.ext.junit)
 }

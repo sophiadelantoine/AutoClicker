@@ -154,7 +154,7 @@ class NativeDetector private constructor() : ImageDetector {
                 width = detectionArea.width(),
                 height = detectionArea.height(),
                 threshold
-            ).toDetectionResult()
+            ).toTextDetectionResult()
         } catch (ex: Exception) {
             ex.throwWithKeys(
                 keys = mapOf(
@@ -288,7 +288,7 @@ class NativeDetector private constructor() : ImageDetector {
         width: Int,
         height: Int,
         threshold: Int,
-    ): DoubleArray?
+    ): Array<Any?>?
 
     /**
      * Native method for detecting if a number is at a specific position in the current screen bitmap.

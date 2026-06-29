@@ -25,6 +25,7 @@ import android.graphics.Point
  * @param position contains the center of the detected condition in screen coordinates.
  * @param size size of the detected condition.
  * @param numberDetected defined only for a positive number capture request, null for others.
+ * @param recognizedText the text read by OCR for a text capture request, null for others.
  */
 data class DetectionResult(
     val isDetected: Boolean = false,
@@ -32,6 +33,7 @@ data class DetectionResult(
     val position: Point = Point(),
     val size: Point = Point(),
     val numberDetected: Double? = null,
+    val recognizedText: String? = null,
 )
 
 /** Build the detection result object from a native call returned value. */
@@ -46,4 +48,23 @@ internal fun DoubleArray?.toDetectionResult(): DetectionResult {
         confidenceRate = this[5],
         numberDetected = if(numberDetected == Double.MIN_VALUE) null else numberDetected,
     )
+}
+
+/**
+ * Build the detection result from a text-detection native call.
+ *
+ * The native text path returns an Object[2] bundle: index 0 is the legacy 7-element double[]
+ * (same layout consumed by [toDetectionResult]) and index 1 is the recognized text as raw UTF-8
+ * bytes (a byte[], emitted without NewStringUTF so multibyte CJK/Arabic survive). The bytes are
+ * decoded here with [Charsets.UTF_8]. The numeric mapping is delegated unchanged to [toDetectionResult].
+ */
+internal fun Array<*>?.toTextDetectionResult(): DetectionResult {
+    if (this == null || size < 2) return DetectionResult()
+
+    val numericResult = (this[0] as? DoubleArray).toDetectionResult()
+    val recognizedText = (this[1] as? ByteArray)
+        ?.takeIf { it.isNotEmpty() }
+        ?.let { String(it, Charsets.UTF_8) }
+
+    return numericResult.copy(recognizedText = recognizedText)
 }
