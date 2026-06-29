@@ -259,7 +259,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P0-1 (flavor dimension applies repo-wide via flavour convention plugin); build-logic/convention/src/main/kotlin/com/buzbuz/gradle/convention/plugins/FlavourConventionPlugin.kt; core/common/base
 **Dependencies:** P0-T04a
 
-#### [ ] P0-T05 — Add cloudImplementation dependency-scoping extension  `size: S`
+#### [x] P0-T05 — Add cloudImplementation dependency-scoping extension  `size: S`
 **Slice:** Add a cloudImplementation DependencyHandlerScope helper mirroring playStoreImplementation so a dependency edge can be gated into the cloud connectivity variant only.
 **Definition of Done:**
 - [ ] build-logic/convention/src/main/kotlin/com/buzbuz/gradle/convention/extensions/DependencyHandlerScopeExt.kt gains internal fun DependencyHandlerScope.cloudImplementation(dependency) = add("cloudImplementation", dependency), mirroring the existing playStoreImplementation helper (lines 26-27)

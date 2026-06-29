@@ -26,6 +26,9 @@ internal fun DependencyHandlerScope.implementation(dependency: Provider<MinimalE
 internal fun DependencyHandlerScope.playStoreImplementation(dependency: Provider<MinimalExternalModuleDependency>) =
     add("playStoreImplementation", dependency)
 
+internal fun DependencyHandlerScope.cloudImplementation(dependency: Provider<MinimalExternalModuleDependency>) =
+    add("cloudImplementation", dependency)
+
 internal fun DependencyHandlerScope.ksp(dependency: Provider<MinimalExternalModuleDependency>) =
     add("ksp", dependency)
 
