@@ -80,4 +80,22 @@ class DetectionResultTest {
         assertNull(result.recognizedText)
         assertEquals(42.0, result.numberDetected!!, 0.0001)
     }
+
+    @Test
+    fun textResult_flagOff_restoresLegacyNumericOnly() {
+        val bundle: Array<Any?> = arrayOf(detectedNumeric(confidence = 0.77), "ignored".toByteArray(Charsets.UTF_8))
+
+        val result = bundle.toTextDetectionResult(recognizedTextEnabled = false)
+
+        assertNull(result.recognizedText)          // flag off -> no text
+        assertTrue(result.isDetected)              // numeric path unchanged
+        assertEquals(0.77, result.confidenceRate, 0.0001)
+    }
+
+    @Test
+    fun textResult_flagOn_populatesRecognizedText() {
+        val bundle: Array<Any?> = arrayOf(detectedNumeric(), "on".toByteArray(Charsets.UTF_8))
+
+        assertEquals("on", bundle.toTextDetectionResult(recognizedTextEnabled = true).recognizedText)
+    }
 }

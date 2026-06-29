@@ -376,7 +376,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P1-1 (JNI surface recognized OCR text); Addendum §2 (UTF-8 decode via Charsets.UTF_8, not NewStringUTF); Data contracts: Text verbatim/trim-only normalization; core/smart/detection/src/main/java/com/buzbuz/smartautoclicker/core/detection/NativeDetector.kt (detectTextNative external ~L283-291, text call site ~L149); core/smart/detection/src/main/java/com/buzbuz/smartautoclicker/core/detection/DetectionResult.kt
 **Dependencies:** P1-T01
 
-#### [ ] P1-T02 — Feature-flag the recognized-text path (recognizedTextEnabled) with a toggle test  `size: S`
+#### [x] P1-T02 — Feature-flag the recognized-text path (recognizedTextEnabled) with a toggle test  `size: S`
 **Slice:** Add a recognizedTextEnabled flag on ImageDetector/NativeDetector that, when off, restores the legacy detectText path (recognizedText null) and, when on, matches P1-T01b behavior, covered by a flag-toggle test.
 **Definition of Done:**
 - [ ] NativeDetector.kt and ImageDetector.kt expose a recognizedTextEnabled flag; with the flag off, detectText returns recognizedText=null and the legacy numeric path; with the flag on, recognizedText is populated as in P1-T01b.

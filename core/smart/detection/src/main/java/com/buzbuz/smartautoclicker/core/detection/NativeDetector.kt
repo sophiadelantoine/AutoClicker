@@ -47,6 +47,8 @@ class NativeDetector private constructor() : ImageDetector {
     private var isClosed: Boolean = false
     private var screenDimensions: Point = Point(0, 0)
 
+    override var recognizedTextEnabled: Boolean = true
+
     override fun init() {
         nativePtr = newDetector()
     }
@@ -154,7 +156,7 @@ class NativeDetector private constructor() : ImageDetector {
                 width = detectionArea.width(),
                 height = detectionArea.height(),
                 threshold
-            ).toTextDetectionResult()
+            ).toTextDetectionResult(recognizedTextEnabled)
         } catch (ex: Exception) {
             ex.throwWithKeys(
                 keys = mapOf(

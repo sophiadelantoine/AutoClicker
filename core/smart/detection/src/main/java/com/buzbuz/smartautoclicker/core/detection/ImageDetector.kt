@@ -26,6 +26,13 @@ import androidx.annotation.ColorInt
  */
 interface ImageDetector : AutoCloseable {
 
+    /**
+     * Feature flag (kill switch) for the OCR recognized-text capture path. Defaults to true.
+     * When false, [detectText] uses the legacy numeric path and leaves [DetectionResult.recognizedText]
+     * null; when true, the recognized text is decoded and populated (see P1-T01b).
+     */
+    var recognizedTextEnabled: Boolean
+
     /** Initialize the detector. Must be called on the same thread as the detection. */
     fun init()
 

@@ -68,3 +68,11 @@ internal fun Array<*>?.toTextDetectionResult(): DetectionResult {
 
     return numericResult.copy(recognizedText = recognizedText)
 }
+
+/**
+ * Flag-aware variant of [toTextDetectionResult]. When [recognizedTextEnabled] is false the legacy
+ * numeric-only path is used (recognizedText stays null); when true the recognized text is decoded.
+ */
+internal fun Array<*>?.toTextDetectionResult(recognizedTextEnabled: Boolean): DetectionResult =
+    if (recognizedTextEnabled) toTextDetectionResult()
+    else (this?.getOrNull(0) as? DoubleArray).toDetectionResult()
