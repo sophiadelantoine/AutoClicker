@@ -25,6 +25,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.buzbuz.smartautoclicker.core.database.ClickDatabase
 import com.buzbuz.smartautoclicker.core.database.entity.ObservationEntity
 
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 
 import org.junit.After
@@ -92,5 +93,39 @@ class ObservationDaoTest {
 
         // SYNCED excluded; PENDING + FAILED ordered by device_captured_at ascending.
         assertEquals(listOf("failed", "b", "a"), batch.map { it.id })
+    }
+
+    @Test
+    fun markSyncState_updatesStateAndRetryCount() = runTest {
+        dao.insert(observation("a"))
+
+        dao.markSyncState("a", "FAILED", 3)
+
+        val row = dao.getUploadBatch(10).single { it.id == "a" }
+        assertEquals("FAILED", row.syncState)
+        assertEquals(3, row.retryCount)
+    }
+
+    @Test
+    fun markStateForIds_movesRowsOutOfUploadFilter() = runTest {
+        dao.insert(observation("a", capturedAt = 100L))
+        dao.insert(observation("b", capturedAt = 200L))
+
+        dao.markStateForIds(listOf("a"), "UPLOADING")
+
+        // 'a' is now UPLOADING (excluded from the PENDING/FAILED upload filter)
+        assertEquals(listOf("b"), dao.getUploadBatch(10).map { it.id })
+    }
+
+    @Test
+    fun observeSyncStateCounts_emitsPerStateCounts() = runTest {
+        dao.insert(observation("a"))
+        dao.insert(observation("b"))
+        dao.insert(observation("c", syncState = "SYNCED"))
+
+        val counts = dao.observeSyncStateCounts().first().associate { it.state to it.count }
+
+        assertEquals(2, counts["PENDING"])
+        assertEquals(1, counts["SYNCED"])
     }
 }

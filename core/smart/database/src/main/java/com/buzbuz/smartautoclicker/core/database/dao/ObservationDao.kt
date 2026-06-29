@@ -16,6 +16,7 @@
  */
 package com.buzbuz.smartautoclicker.core.database.dao
 
+import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -23,6 +24,8 @@ import androidx.room.Query
 
 import com.buzbuz.smartautoclicker.core.database.OBSERVATION_TABLE
 import com.buzbuz.smartautoclicker.core.database.entity.ObservationEntity
+
+import kotlinx.coroutines.flow.Flow
 
 /** Access to the on-device [ObservationEntity] capture/upload queue. */
 @Dao
@@ -47,6 +50,18 @@ interface ObservationDao {
     @Query("UPDATE $OBSERVATION_TABLE SET sync_state = :syncState, retry_count = :retryCount WHERE id = :id")
     suspend fun markSyncState(id: String, syncState: String, retryCount: Int): Int
 
+    /** Batch state-only transition (e.g. marking a pulled batch UPLOADING in-flight; retry preserved). */
+    @Query("UPDATE $OBSERVATION_TABLE SET sync_state = :syncState WHERE id IN (:ids)")
+    suspend fun markStateForIds(ids: List<String>, syncState: String): Int
+
+    /** Batch update of state + retry count for a set of observations. */
+    @Query("UPDATE $OBSERVATION_TABLE SET sync_state = :syncState, retry_count = :retryCount WHERE id IN (:ids)")
+    suspend fun markSyncState(ids: List<String>, syncState: String, retryCount: Int): Int
+
+    /** Observable per-state counts for UI / sync-heartbeat consumers. */
+    @Query("SELECT sync_state AS state, COUNT(*) AS count FROM $OBSERVATION_TABLE GROUP BY sync_state")
+    fun observeSyncStateCounts(): Flow<List<SyncStateCount>>
+
     /**
      * Crop file paths safe to prune: those of SYNCED observations older than [before] whose crop is
      * no longer referenced by any not-yet-synced observation (reference-counted, so a crop shared by
@@ -61,3 +76,9 @@ interface ObservationDao {
     )
     suspend fun getPrunableCropPaths(before: Long): List<String>
 }
+
+/** Projection of observation counts grouped by sync state. */
+data class SyncStateCount(
+    @ColumnInfo(name = "state") val state: String,
+    @ColumnInfo(name = "count") val count: Int,
+)
