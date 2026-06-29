@@ -679,7 +679,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint Scenario pull wire JSON (TRAXINTEL_MVP_BLUEPRINT.md lines ~3387-3395); Blueprint scenario-id lifecycle create/assign/pull chain (line ~2235); Blueprint tracking_scenarios + scenario_assignments DDL (lines ~3431-3452); Blueprint scenario-pull/assignment shape resolution (stop conditions 2,3)
 **Dependencies:** P2-T01, P2-T02, P2-T03
 
-#### [ ] P2-T09 — Dashboard: login + tenant-scoped device list with online derivation  `size: M`
+#### [x] P2-T09 — Dashboard: login + tenant-scoped device list with online derivation  `size: M`
 **Slice:** Build the dashboard authentication shell and the device list: operator logs in with the Account token and sees only their Tenant's devices, with an online dot derived from last_seen_at and tracking from devices.tracking.
 **Definition of Done:**
 - [ ] Operator logs in via POST /v1/auth/login and the dashboard establishes tenant context; only the caller's Tenant devices are shown (GET /v1/devices).
