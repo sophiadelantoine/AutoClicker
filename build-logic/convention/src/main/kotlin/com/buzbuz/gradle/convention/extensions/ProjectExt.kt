@@ -52,8 +52,28 @@ fun Project.isBuildForVariant(variantName: String?): Boolean {
     } != null
 }
 
-fun Project.isBuildForVariant(flavour: KlickrFlavour? = null, buildType: KlickrBuildType? = null): Boolean =
-    isBuildForVariant(getVariantName(flavour, buildType))
+/**
+ * Check if the current build is for the provided [flavour] and/or [buildType].
+ *
+ * AGP composes variant/task names as `<version><Connectivity><BuildType>` (e.g. `fDroidLocalDebug`,
+ * `playStoreCloudRelease`), so the CONNECTIVITY segment sits *between* the version flavour and the
+ * build type. When both are requested we therefore match each segment independently instead of as
+ * one contiguous substring, so the gate fires for every connectivity flavour (local and cloud).
+ * Embedding a single default connectivity into the composed name would wrongly miss variants such
+ * as `playStoreCloudRelease`, so connectivity is deliberately kept out of the requested segments.
+ */
+fun Project.isBuildForVariant(flavour: KlickrFlavour? = null, buildType: KlickrBuildType? = null): Boolean {
+    if (flavour != null && buildType != null) {
+        val flavourSegment = flavour.flavourName.uppercaseFirstChar()
+        val buildTypeSegment = buildType.buildTypeName.uppercaseFirstChar()
+        return project.gradle.startParameter.taskRequests.any { taskExecRequest ->
+            taskExecRequest.args.any { taskName ->
+                taskName.contains(flavourSegment) && taskName.contains(buildTypeSegment)
+            }
+        }
+    }
+    return isBuildForVariant(getVariantName(flavour, buildType))
+}
 
 
 internal fun Project.getLibs(): VersionCatalogWrapper =

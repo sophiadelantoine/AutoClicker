@@ -200,7 +200,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P0-1 (CONNECTIVITY flavor dimension); build-logic/convention/src/main/kotlin/com/buzbuz/gradle/convention/model/KlickrVariants.kt; build-logic/convention/src/main/kotlin/com/buzbuz/gradle/convention/plugins/FlavourConventionPlugin.kt
 **Dependencies:** none
 
-#### [ ] P0-T04b — Fix getVariantName to emit the CONNECTIVITY segment and verify app-module gating fires  `size: M`
+#### [x] P0-T04b — Fix getVariantName to emit the CONNECTIVITY segment and verify app-module gating fires  `size: M`
 **Slice:** Update getVariantName() so it includes the CONNECTIVITY flavour segment in the order AGP produces (e.g. fDroidLocalDebug), so the substring-based isBuildForVariant() still resolves and every gated block in the app build script keeps firing.
 **Definition of Done:**
 - [ ] build-logic/convention/src/main/kotlin/com/buzbuz/gradle/convention/extensions/ProductFlavourExt.kt: getVariantName() is changed to compose the variant name including the CONNECTIVITY segment (version flavour + connectivity flavour + buildType, matching AGP's emitted task name such as fDroidLocalDebug / playStoreCloudRelease) rather than only flavour+buildType
