@@ -498,7 +498,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P1-2 (domain model + persistence wiring); Architecture: ObservationCaptureListener implements SmartProcessingListener (dependency inversion); Data contracts: false reads persisted; deviceCapturedAt source; Validation note: module-scoped :core:observation gate chosen (matches sibling tasks); this task does not change shared processing/listener-interface code (that is P1-T04), so the whole-repo fast gate is not required.; core/observation/src/main/java/.../ObservationCaptureListener.kt (new), repository; core/smart/processing/src/main/java/.../domain/SmartProcessingListener.kt (interface implemented)
 **Dependencies:** P0-4, P0-6, P1-T04, P1-T07, P1-T08
 
-#### [ ] P1-T10 — TrackingScenario -> local Scenario bridge with synthetic sentinels (Number)  `size: M`
+#### [x] P1-T10 — TrackingScenario -> local Scenario bridge with synthetic sentinels (Number)  `size: M`
 **Slice:** Add a core:observation adapter mapping a cloud TrackingScenario (readType, detectionArea:Rect, alphabet, interval) onto a single-ScreenEvent read-only Scenario with one ScreenCondition (Number/Text/Color), no Action, using synthetic sentinels and a temporary non-persisted Identifier.
 **Definition of Done:**
 - [ ] A TrackingScenario produces a runnable Scenario with one ScreenEvent containing exactly one read-only ScreenCondition and no Action.

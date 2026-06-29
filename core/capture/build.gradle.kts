@@ -28,14 +28,15 @@ android {
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
+    // base (Identifier) and detection-models (OCRAlphabet) are implementation deps of domain and
+    // thus not exposed transitively; the adapter references them directly.
+    implementation(project(":core:common:base"))
     implementation(project(":core:observation"))
     implementation(project(":core:smart:database"))
+    implementation(project(":core:smart:detection-models"))
     implementation(project(":core:smart:domain"))
     implementation(project(":core:smart:processing"))
 
-    // core:common:base is an implementation dep of domain (not exposed); the test constructs
-    // domain conditions that reference Identifier, so it needs base directly.
-    testImplementation(project(":core:common:base"))
     testImplementation(libs.androidx.room.ktx)
     testImplementation(libs.androidx.room.testing)
     testImplementation(libs.kotlinx.coroutines.test)
