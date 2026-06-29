@@ -25,3 +25,8 @@ plugins {
 android {
     namespace = "com.buzbuz.smartautoclicker.core.observation"
 }
+
+dependencies {
+    implementation(project(":core:common:base")) // PreferencesDataStore for device identity
+    implementation(libs.androidx.datastore)
+}

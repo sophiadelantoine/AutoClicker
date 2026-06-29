@@ -30,6 +30,7 @@ android {
 // it MUST NOT import GPL domain entities (Observation/Scenario/Condition) — the /v1 contract is the seam.
 dependencies {
     implementation(project(":core:common:base")) // PreferencesDataStore only (no GPL domain entities)
+    implementation(project(":core:observation")) // DeviceIdentityDataSource only (not the domain entities)
     implementation(libs.androidx.datastore)
 
     implementation(libs.square.retrofit)
