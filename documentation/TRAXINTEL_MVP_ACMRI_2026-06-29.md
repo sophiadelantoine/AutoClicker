@@ -287,7 +287,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P0 (new Firebase/FCM project); smartautoclicker/src/playStore/google-services.json; smartautoclicker/build.gradle.kts; gradle/libs.versions.toml
 **Dependencies:** P0-T04b
 
-#### [ ] P0-T07 — Add Retrofit/OkHttp + WorkManager/Hilt-Work version-catalog entries  `size: S`
+#### [x] P0-T07 — Add Retrofit/OkHttp + WorkManager/Hilt-Work version-catalog entries  `size: S`
 **Slice:** Add net-new dependency aliases for Retrofit/OkHttp + kotlinx-serialization-converter and androidx WorkManager + Hilt-Work (runtime, worker, KSP compiler) to the version catalog with versions that resolve cleanly, without wiring them into any module yet.
 **Definition of Done:**
 - [ ] gradle/libs.versions.toml adds version refs and library aliases for retrofit, okhttp, the retrofit kotlinx-serialization converter, androidx.work:work-runtime-ktx, androidx.hilt:hilt-work, and androidx.hilt:hilt-compiler
