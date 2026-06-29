@@ -33,6 +33,8 @@ sealed class ProcessedConditionResult {
      * @param condition the condition that triggered this result.
      * @param confidenceRate the confidence rate of the detection algorithm on this result. Between [0 - 100].
      * @param position the position at which the condition have been detected. Null if not detected.
+     * @param numberDetected the raw number read by OCR for a Number condition, null for others.
+     * @param recognizedText the raw text read by OCR for a Text condition, null for others.
      */
     data class Screen(
         override val isFulfilled: Boolean,
@@ -41,6 +43,8 @@ sealed class ProcessedConditionResult {
         val confidenceRate: Double,
         val position: Point?,
         val size: Point?,
+        val numberDetected: Double? = null,
+        val recognizedText: String? = null,
     ) : ProcessedConditionResult()
 
     /**

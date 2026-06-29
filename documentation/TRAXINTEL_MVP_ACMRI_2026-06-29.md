@@ -401,7 +401,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P1-1a (JNI regression guard, CI ABI matrix); .github/workflows/execute-tests.yml (add cpp ABI matrix step; CI-validated — local gradle assemble only smoke-checks the native build, the workflow gate itself is validated on CI)
 **Dependencies:** P1-T01
 
-#### [ ] P1-T03 — Widen processing seam: add numberDetected/recognizedText to ProcessedConditionResult.Screen and populate in verify*  `size: M`
+#### [x] P1-T03 — Widen processing seam: add numberDetected/recognizedText to ProcessedConditionResult.Screen and populate in verify*  `size: M`
 **Slice:** Add nullable numberDetected:Double?=null and recognizedText:String?=null to ProcessedConditionResult.Screen and populate them from DetectionResult in the four verify* methods of ConditionsVerifier (verifyNumberCondition from numberDetected; verifyTextCondition from recognizedText after P1-T01b; verifyColorCondition/verifyImageCondition leave null).
 **Definition of Done:**
 - [ ] ProcessedConditionResult.Screen (data class Screen) gains numberDetected:Double?=null and recognizedText:String?=null (additive, defaulted) so existing construction sites compile unchanged.

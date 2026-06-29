@@ -222,6 +222,7 @@ internal class ConditionsVerifier(
                     position = scalingManager.scaleUpDetectionResult(detectionResult.position),
                     confidenceRate = detectionResult.confidenceRate,
                     size = scalingManager.scaleUpDetectionResult(detectionResult.size),
+                    numberDetected = numberDetected,
                 )
             }
 
@@ -250,6 +251,7 @@ internal class ConditionsVerifier(
             position = scalingManager.scaleUpDetectionResult(detectionResult.position),
             confidenceRate = detectionResult.confidenceRate,
             size = scalingManager.scaleUpDetectionResult(detectionResult.size),
+            recognizedText = detectionResult.recognizedText,
         )
 
         progressListener?.onScreenConditionProcessingCompleted(result)
