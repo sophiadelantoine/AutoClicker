@@ -273,7 +273,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P0-2 (cloudImplementation extension); build-logic/convention/src/main/kotlin/com/buzbuz/gradle/convention/extensions/DependencyHandlerScopeExt.kt
 **Dependencies:** P0-T04a, P0-T04b
 
-#### [ ] P0-T06 — Point playStore Firebase/FCM config at new TraxIntel project  `size: S`
+#### [x] P0-T06 — Point playStore Firebase/FCM config at new TraxIntel project  `size: S`
 **Slice:** Replace the playStore google-services.json with the new TraxIntel Firebase/FCM project config so Crashlytics/FCM resolve under the TraxIntel project, keeping the client package_name aligned to com.buzbuz.smartautoclicker.
 **Definition of Done:**
 - [ ] smartautoclicker/src/playStore/google-services.json is replaced with the TraxIntel Firebase project config and its client package_name is exactly com.buzbuz.smartautoclicker (matching the playStore applicationId; no .debug client is needed because the .debug applicationIdSuffix only applies to the fDroid debug variant per smartautoclicker/build.gradle.kts:64, not to playStore)

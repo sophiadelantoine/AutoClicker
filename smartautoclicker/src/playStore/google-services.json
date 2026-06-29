@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "970153317973",
-    "project_id": "smart-autoclicker",
-    "storage_bucket": "smart-autoclicker.appspot.com"
+    "project_number": "100000000000",
+    "project_id": "traxintel",
+    "storage_bucket": "traxintel.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:970153317973:android:1d14db38d0ef2685e366dc",
+        "mobilesdk_app_id": "1:100000000000:android:00000000000000000000aa",
         "android_client_info": {
           "package_name": "com.buzbuz.smartautoclicker"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "970153317973-ljv4jeb9og9u0166bl1n7h1vq0rfrb6k.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDPEvDywy1kPdh8Ac7wR3r-wxUR6zcVqyo"
+          "current_key": "AIzaSyTRAXINTEL-PLACEHOLDER-REPLACE-WITH-REAL"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "970153317973-ljv4jeb9og9u0166bl1n7h1vq0rfrb6k.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
