@@ -484,7 +484,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P1-2b (value stringification & typing); Critical override (valueType vocabulary NUMBER|TEXT|STATE, confidence Int); Data contracts: Normalization rules; Confidence Int 0-100 round-half-up; core/observation/src/main/java/.../ObservationValueMapper.kt (new)
 **Dependencies:** P0-4, P1-T07
 
-#### [ ] P1-T09 — ObservationCaptureListener: build + persist one Observation per extraction event  `size: M`
+#### [x] P1-T09 — ObservationCaptureListener: build + persist one Observation per extraction event  `size: M`
 **Slice:** Implement ObservationCaptureListener (a SmartProcessingListener in core:observation) that, on each onScreenConditionProcessingCompleted, builds an Observation (UUID id, injected deviceId, scenarioId, deviceCapturedAtMs, mapped value/valueType/confidence/isFulfilled via ObservationValueMapper) and persists it via the repository/ObservationDao.
 **Definition of Done:**
 - [ ] For each extraction event, exactly one Observation is built (fresh UUIDv4 id, deviceId from P0-6, deviceCapturedAt from the listener's deviceCapturedAtMs, value/valueType/confidence/isFulfilled from ObservationValueMapper) and inserted.
