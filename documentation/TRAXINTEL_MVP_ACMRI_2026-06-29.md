@@ -543,7 +543,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 - Account-auth authority conflict: Section 11 (canonical) has no password_hash column and no auth endpoint, while the non-canonical section (lines ~1994, ~2115, ~2275) defines argon2id + POST /v1/auth/register|login. This phase resolves it by elevating the non-canonical auth section as authority AND adding password_hash via P2-T02b. STOP and escalate ONLY if the product owner rejects elevating the non-canonical auth shapes (then auth must be redesigned before P2-T03).
 - No ingest rate-limiting/backpressure design agreed (blueprint gap, line ~3758) — proceed with the BATCH_SIZE cap only and flag per-device rate limiting as deferred to a later phase; STOP only if a hard per-device rate limit is mandated for MVP.
 
-#### [ ] P2-T01 — Author the /v1 OpenAPI 3.x contract covering the full MVP surface  `size: M`
+#### [x] P2-T01 — Author the /v1 OpenAPI 3.x contract covering the full MVP surface  `size: M`
 **Slice:** Write a versioned OpenAPI 3.x document covering EVERY /v1 endpoint and DTO the MVP uses, deriving the device-facing shapes verbatim from canonical Section 11 and the account-auth/dashboard-read shapes from the elevated non-canonical 'TraxIntel Cloud' section, so server and client core:network share one authoritative wire shape (no shared Kotlin types).
 **Definition of Done:**
 - [ ] openapi/traxintel-v1.yaml exists in the backend repo and validates against an OpenAPI 3.x linter.
