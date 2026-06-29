@@ -20,7 +20,7 @@ jobs:
           distribution: 'zulu'
           java-version: '21'
       - name: Local unit tests with Gradle
-        run: ./gradlew testFDroidDebugUnitTest
+        run: ./gradlew testFDroidLocalDebugUnitTest
         env:
           JAVA_TOOL_OPTIONS: "-Djava.net.preferIPv4Stack=true"
       - name: Upload tests results
@@ -28,4 +28,4 @@ jobs:
         if: success() || failure()
         with:
           name: test-results
-          path: ./**/testFDroidDebugUnitTest/TEST-*.xml
+          path: ./**/testFDroidLocalDebugUnitTest/TEST-*.xml

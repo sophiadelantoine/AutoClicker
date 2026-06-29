@@ -244,7 +244,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Phase stop condition: CI assemble*/bundle* task names remapped; .github/workflows/release.yml; .github/workflows/release-playstore.yml; .github/workflows/nightly-obfuscation.yml; .github/workflows/execute-tests.yml
 **Dependencies:** P0-T04b
 
-#### [ ] P0-T04e — Verify the doubled flavor matrix configures across androidLib modules  `size: S`
+#### [x] P0-T04e — Verify the doubled flavor matrix configures across androidLib modules  `size: S`
 **Slice:** Prove the CONNECTIVITY dimension applied by FlavourConventionPlugin to every androidLib module (~25 core/* and feature/* modules) does not break library configuration, by assembling a representative library module's new connectivity variant.
 **Definition of Done:**
 - [ ] FlavourConventionPlugin androidLib block (lines 45-56) creates the LOCAL/CLOUD flavours for library modules with no manual per-module edit
