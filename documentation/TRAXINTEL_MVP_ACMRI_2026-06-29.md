@@ -992,7 +992,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint 'Remote start/stop: FCM + polling fallback' (TrackingController seam); Architecture 'Module graph (strictly inward)'; core/network/src/main/java/com/buzbuz/smartautoclicker/core/network/; core/network/src/main/java/com/buzbuz/smartautoclicker/core/network/di/Hilt.kt
 **Dependencies:** P2-1, P4-T00
 
-#### [ ] P4-T02 — Implement TrackingController in core:scheduling over LocalServiceProvider via setScenarioId + start/stop  `size: M`
+#### [x] P4-T02 — Implement TrackingController in core:scheduling over LocalServiceProvider via setScenarioId + start/stop  `size: M`
 **Slice:** Implement TrackingController in core:scheduling: STOP routes to LocalServiceProvider.getLocalService { it?.stop() } (unattended); START, when AccessibilityService is connected and projection is live (P3-2 signal), marks/assigns the scenario via the real path (setScenarioId(Identifier) then the P1-5b service-bound start) and returns APPLIED; otherwise posts a high-priority consent notification and returns PENDING_CONSENT. Must NOT pass a scenarioId into startDetection (the API takes none).
 **Definition of Done:**
 - [ ] stop() tears down detection/projection via LocalServiceProvider.getLocalService { it?.stop() } and returns APPLIED, or NOOP when LocalServiceProvider.isServiceStarted() is false / already stopped.
