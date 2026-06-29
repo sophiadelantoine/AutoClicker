@@ -214,7 +214,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P0-1 (variant gating preserved under new dimension); Phase stop condition: isBuildForVariant matching after rename; build-logic/convention/src/main/kotlin/com/buzbuz/gradle/convention/extensions/ProductFlavourExt.kt; build-logic/convention/src/main/kotlin/com/buzbuz/gradle/convention/extensions/ProjectExt.kt; smartautoclicker/build.gradle.kts
 **Dependencies:** P0-T04a
 
-#### [ ] P0-T04c — Verify obfuscation variant resolution against an obfuscated release variant  `size: S`
+#### [x] P0-T04c — Verify obfuscation variant resolution against an obfuscated release variant  `size: S`
 **Slice:** Confirm ObfuscationPlugin / RandomizeApplicationTask still resolve the intended variant after the dimension rename, by building an obfuscated release variant and checking the randomized/obfuscated application class manifest placeholder resolves.
 **Definition of Done:**
 - [ ] The shouldRandomize gate in smartautoclicker/build.gradle.kts (isBuildForVariant(KlickrFlavour.F_DROID), line 45) still evaluates correctly for the new fDroidLocal* variant after the P0-T04b getVariantName fix
