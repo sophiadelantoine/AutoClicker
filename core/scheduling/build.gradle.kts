@@ -29,9 +29,15 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:capture")) // ObservationSyncRepository (SyncState machine)
+    implementation(project(":core:network")) // TraxIntelApiService + wire DTOs
+    implementation(project(":core:observation")) // PendingUpload
+
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.hilt.work)
+    implementation(libs.square.retrofit) // HttpException (retryable-status classification)
     ksp(libs.androidx.hilt.compiler)
 
     testImplementation(libs.androidx.work.testing)
+    testImplementation(libs.square.okhttp) // build HttpException test responses
 }
