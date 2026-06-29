@@ -693,7 +693,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint dashboard Devices view (TRAXINTEL_MVP_BLUEPRINT.md line ~2305); Blueprint user story 6 / device list (lines ~54, ~68); Blueprint GET /v1/devices read endpoint (line ~2282)
 **Dependencies:** P2-T01, P2-T03, P2-T04
 
-#### [ ] P2-T10 — Dashboard: scenario-filtered time-series chart with low-confidence styling  `size: M`
+#### [x] P2-T10 — Dashboard: scenario-filtered time-series chart with low-confidence styling  `size: M`
 **Slice:** Build the per-scenario value-over-time chart sourced from observations.value_number via GET /v1/observations, with device multi-select and time-range filters and visually distinguished low-confidence points.
 **Definition of Done:**
 - [ ] Selecting a scenario renders a value-over-time line/scatter chart from GET /v1/observations?scenarioId=&deviceIds=&from=&to= (one series per device), backed server-side by observations.value_number via idx_obs_series.
