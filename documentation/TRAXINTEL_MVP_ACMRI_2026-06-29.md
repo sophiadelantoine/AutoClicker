@@ -171,7 +171,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P0-5 (translated strings); smartautoclicker/src/main/res/values-*/strings.xml; core/common/ui/src/main/res/values-*/strings.xml; core/common/permissions/src/main/res/values-*/strings.xml; settings.gradle.kts
 **Dependencies:** P0-T01
 
-#### [ ] P0-T03 — Replace launcher icons with TraxIntel branding  `size: S`
+#### [x] P0-T03 — Replace launcher icons with TraxIntel branding  `size: S`
 **Slice:** Swap the ic_smart_auto_clicker launcher/round icon assets (all density mipmaps + adaptive-icon v26 XML) for TraxIntel artwork, keeping the existing resource names so the manifest references stay valid.
 **Definition of Done:**
 - [ ] New TraxIntel artwork replaces ic_smart_auto_clicker.png and ic_smart_auto_clicker_round.png across mipmap-mdpi/hdpi/xhdpi/xxhdpi/xxxhdpi
