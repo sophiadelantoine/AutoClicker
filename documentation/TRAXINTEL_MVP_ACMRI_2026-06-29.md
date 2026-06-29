@@ -559,7 +559,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint Section 11 'Wire JSON (Trax Cloud /v1)' (TRAXINTEL_MVP_BLUEPRINT.md lines ~3356-3404); Blueprint elevated non-canonical auth/dashboard endpoints (lines ~2115, ~2153, ~2231-2308); Blueprint architecture note 'OpenAPI contract — not shared Kotlin types — is the integration seam' (line ~377); Client consumer: core/network (to be created in P3, AutoClicker repo)
 **Dependencies:** none
 
-#### [ ] P2-T02 — Create the PostgreSQL core schema + migrations (canonical Section 11 tables)  `size: M`
+#### [x] P2-T02 — Create the PostgreSQL core schema + migrations (canonical Section 11 tables)  `size: M`
 **Slice:** Implement the seven canonical Trax Cloud tables (accounts, tenants, devices, tracking_scenarios, scenario_assignments, observations, device_commands) as ordered migrations exactly matching the Section 11 DDL, including the idempotency and value_number invariants. Does NOT include the auth password_hash column (P2-T02b).
 **Definition of Done:**
 - [ ] Migration files create all seven tables with the columns, FKs, and CHECKs from the Section 11 DDL (lines ~3408-3493).
