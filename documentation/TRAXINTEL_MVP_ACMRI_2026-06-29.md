@@ -1022,7 +1022,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint 'Remote start/stop: FCM + polling fallback' (CommandPullWorker code listing); canonical command contract resolved in P4-T00; device_commands (type CHECK START|STOP, expires_at, acked_at); core/network/src/main/java/com/buzbuz/smartautoclicker/core/network/; core/network/src/main/java/com/buzbuz/smartautoclicker/core/network/di/Hilt.kt
 **Dependencies:** P4-T00, P4-T01, P4-T02, P3-2
 
-#### [ ] P4-T04 — Schedule periodic enrollment-gated command polling + fetchNow one-shot (fDroidCloud fallback)  `size: M`
+#### [x] P4-T04 — Schedule periodic enrollment-gated command polling + fetchNow one-shot (fDroidCloud fallback)  `size: M`
 **Slice:** Add a CommandSyncScheduler in core:network that enqueues CommandPullWorker as a periodic UniquePeriodicWork (Constraints CONNECTED, ExistingPeriodicWorkPolicy.KEEP) and a fetchNow() expedited one-shot, mirroring the existing observation uploader's WorkManager wiring; enqueued from the cloud-only Application on enrollment.
 **Definition of Done:**
 - [ ] CommandSyncScheduler.schedulePeriodic(context) enqueues a unique periodic CommandPullWorker with CONNECTED constraint and ExistingPeriodicWorkPolicy.KEEP.
