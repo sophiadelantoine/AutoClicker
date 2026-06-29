@@ -228,7 +228,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P0-1 (obfuscation variant resolution preserved); Phase stop condition: ObfuscationPlugin/RandomizeApplicationTask resolves variant; build-logic/obfuscation/src/main/kotlin/com/buzbuz/gradle/obfuscation/ObfuscationPlugin.kt; build-logic/obfuscation/src/main/kotlin/com/buzbuz/gradle/obfuscation/ProjectExtra.kt; smartautoclicker/build.gradle.kts
 **Dependencies:** P0-T04b
 
-#### [ ] P0-T04d — Remap CI workflow assemble/bundle task names to the new variant names  `size: S`
+#### [x] P0-T04d — Remap CI workflow assemble/bundle task names to the new variant names  `size: S`
 **Slice:** Update the assemble*/bundle*/uploadCrashlyticsSymbolFile* Gradle task references in the CI workflows so they name the new connectivity-qualified variants and the release pipeline keeps working.
 **Definition of Done:**
 - [ ] .github/workflows/release.yml line 41 assembleFDroidRelease is remapped to the new variant (assembleFDroidLocalRelease, matching the FOSS default connectivity flavour)
