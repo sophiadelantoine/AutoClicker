@@ -635,7 +635,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint Observation batch upload wire JSON (TRAXINTEL_MVP_BLUEPRINT.md lines ~3365-3386); Blueprint idempotency linchpin / ON CONFLICT DO NOTHING (line ~3172); Blueprint idempotent-ingest API test gate (line ~2840); Blueprint unassigned-scenario 409 rule (line ~2235)
 **Dependencies:** P2-T01, P2-T02, P2-T04
 
-#### [ ] P2-T06 — value_number materialization + ck_obs_value_number invariant on ingest  `size: S`
+#### [x] P2-T06 — value_number materialization + ck_obs_value_number invariant on ingest  `size: S`
 **Slice:** Materialize observations.value_number exactly for fulfilled NUMBER rows during batch ingest (parsed from value) and leave it null otherwise, satisfying ck_obs_value_number; ensure failed NUMBER reads are stored, not dropped.
 **Definition of Done:**
 - [ ] On ingest, value_number is parsed from value and set exactly when value_type='NUMBER' AND is_fulfilled; null for TEXT, STATE, and failed NUMBER reads, satisfying ck_obs_value_number.
