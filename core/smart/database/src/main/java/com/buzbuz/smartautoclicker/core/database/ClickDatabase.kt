@@ -25,6 +25,7 @@ import com.buzbuz.smartautoclicker.core.database.entity.CountersEntity
 import com.buzbuz.smartautoclicker.core.database.entity.EventEntity
 import com.buzbuz.smartautoclicker.core.database.entity.EventToggleEntity
 import com.buzbuz.smartautoclicker.core.database.entity.IntentExtraEntity
+import com.buzbuz.smartautoclicker.core.database.entity.ObservationEntity
 import com.buzbuz.smartautoclicker.core.database.entity.ScenarioEntity
 import com.buzbuz.smartautoclicker.core.database.entity.ScenarioStatsEntity
 import com.buzbuz.smartautoclicker.core.database.migrations.*
@@ -42,6 +43,7 @@ import javax.inject.Singleton
         EventToggleEntity::class,
         ScenarioStatsEntity::class,
         CountersEntity::class,
+        ObservationEntity::class,
     ],
     version = DATABASE_VERSION,
     exportSchema = true,
