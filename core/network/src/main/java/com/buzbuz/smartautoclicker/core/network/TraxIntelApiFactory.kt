@@ -16,6 +16,9 @@
  */
 package com.buzbuz.smartautoclicker.core.network
 
+import com.buzbuz.smartautoclicker.core.network.auth.BearerAuthInterceptor
+import com.buzbuz.smartautoclicker.core.network.auth.TraxIntelClientInterceptor
+
 import kotlinx.serialization.json.Json
 
 import okhttp3.MediaType.Companion.toMediaType
@@ -41,4 +44,21 @@ object TraxIntelApiFactory {
             .addConverterFactory(json.asConverterFactory(JSON_MEDIA_TYPE))
             .build()
             .create(TraxIntelApiService::class.java)
+
+    /**
+     * Authenticated client (encapsulates OkHttp + the bearer / X-TraxIntel-Client interceptors so
+     * callers need no OkHttp dependency). [deviceTokenProvider] supplies the current device token.
+     */
+    fun createAuthenticated(
+        baseUrl: String,
+        deviceTokenProvider: () -> String?,
+        appVersion: String,
+        dbVersion: Int,
+    ): TraxIntelApiService {
+        val client = OkHttpClient.Builder()
+            .addInterceptor(BearerAuthInterceptor(deviceTokenProvider))
+            .addInterceptor(TraxIntelClientInterceptor(appVersion, dbVersion))
+            .build()
+        return create(baseUrl, client)
+    }
 }

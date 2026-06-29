@@ -189,8 +189,13 @@ dependencies {
     implementation(project(":feature:tutorial"))
 
     // Cloud connectivity: linked into the CLOUD flavor only (the LOCAL runtime classpath links
-    // none of androidx.work / Retrofit / OkHttp). CloudApplication supplies the HiltWorkerFactory.
+    // none of androidx.work / Retrofit / OkHttp). CloudApplication supplies the HiltWorkerFactory;
+    // CloudModule (src/cloud) wires the worker's dependencies.
     cloudImplementation(project(":core:scheduling"))
+    cloudImplementation(project(":core:capture"))
+    cloudImplementation(project(":core:network"))
+    cloudImplementation(project(":core:observation"))
+    cloudImplementation(project(":core:smart:database")) // ClickDatabase + DatabaseInfo for CloudModule
     cloudImplementation(libs.androidx.work.runtime.ktx)
     cloudImplementation(libs.androidx.hilt.work)
 }

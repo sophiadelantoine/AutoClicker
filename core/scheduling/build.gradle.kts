@@ -40,4 +40,6 @@ dependencies {
 
     testImplementation(libs.androidx.work.testing)
     testImplementation(libs.square.okhttp) // build HttpException test responses
+    testImplementation(project(":core:smart:database")) // in-memory ClickDatabase for the e2e test
+    testImplementation(libs.androidx.room.testing)
 }

@@ -21,6 +21,7 @@ import androidx.room.Room
 
 import com.buzbuz.smartautoclicker.core.database.ClickDatabase
 import com.buzbuz.smartautoclicker.core.database.TutorialDatabase
+import com.buzbuz.smartautoclicker.core.database.dao.ObservationDao
 import com.buzbuz.smartautoclicker.core.database.migrations.Migration10to11
 import com.buzbuz.smartautoclicker.core.database.migrations.Migration12to13
 import com.buzbuz.smartautoclicker.core.database.migrations.Migration19to20
@@ -65,6 +66,10 @@ internal object SmartDatabaseModule {
             Migration19to20,
             Migration21to22,
         ).build()
+
+    @Provides
+    @Singleton
+    fun providesObservationDao(database: ClickDatabase): ObservationDao = database.observationDao()
 
     @Provides
     @Singleton
