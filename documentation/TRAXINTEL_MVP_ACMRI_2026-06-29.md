@@ -457,7 +457,7 @@ Ship the thinnest viable TraxIntel MVP that turns an enrolled Android device int
 **Traceability:** Blueprint P1-3/P1-3a; Critical override (single manual migration, observation-table-only, no AutoMigration); Addendum §1/§6 (manual Migration21to22 registered in addMigrations); core/smart/database/src/main/java/com/buzbuz/smartautoclicker/core/database/di/Hilt.kt (SmartDatabaseModule.providesClickDatabase, addMigrations chain ~L54); core/smart/database/src/main/java/com/buzbuz/smartautoclicker/core/database/ClickDatabase.kt (autoMigrations list — confirm no 21->22 added); core/smart/database/schemas (commit 22.json); core/smart/database/src/test/java/.../migrations/Migration20to21Tests.kt (pattern to mirror)
 **Dependencies:** P1-T05
 
-#### [ ] P1-T07 — ObservationMapper (Entity<->domain) + Observation domain model in core:observation  `size: S`
+#### [x] P1-T07 — ObservationMapper (Entity<->domain) + Observation domain model in core:observation  `size: S`
 **Slice:** Define the Observation domain model in core:observation and an ObservationMapper in core:smart:database mapping ObservationEntity<->Observation (round-trip), without touching Condition mapping or ConditionType.
 **Definition of Done:**
 - [ ] core:observation defines Observation{ id:String (UUID), scenarioId:String, deviceId:String, deviceCapturedAt:Long, value:String?, valueType, confidence:Int, isFulfilled:Boolean, cropPath:String? } (no tenantId — matches the entity columns persisted in P1-T05).
